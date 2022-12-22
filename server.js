@@ -1,6 +1,6 @@
 require('dotenv').config()
 const app = require('fastify')({logger: true});
-app.register(require('./routes/movies'));
+app.register(require('./schemas/movies'));
 const seq = require('./database/connection')
 const PORT = process.env.PORT;
 

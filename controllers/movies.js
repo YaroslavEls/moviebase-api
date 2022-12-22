@@ -32,7 +32,6 @@ const deleteMovie = async (req, reply) => {
 
     await destroyMovie(id);
 
-
     reply.send({message: `item ${id} has been deleted`})
 }
 
@@ -42,11 +41,7 @@ const updateMovie = async (req, reply) => {
 
     await refreshMovie(id, params);
 
-    const item = data.find((item) => item.id === +id);
-
-    const newItem = Object.assign(item, params)
-
-    reply.send(newItem);
+    reply.send({message: `item ${id} has been updated`})
 }
 
 module.exports = {
