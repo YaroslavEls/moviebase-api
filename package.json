@@ -19,8 +19,11 @@
   },
   "homepage": "https://github.com/YaroslavEls/moviebase-api#readme",
   "dependencies": {
+    "@fastify/static": "^5.0.0",
+    "@fastify/swagger": "^6.0.0",
     "dotenv": "^16.0.3",
-    "fastify": "^4.10.2"
+    "fastify": "^4.10.2",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
