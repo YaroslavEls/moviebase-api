@@ -1,7 +1,6 @@
-require('dotenv').config()
+require('dotenv').config();
 const app = require('fastify')({logger: true});
-app.register(require('./schemas/movies'));
-app.register(require('./schemas/genres'));
+app.register(require('./router'));
 const seq = require('./database/connection');
 const associate = require('./database/associate');
 const data_inserting = require('./database/data_inserting');

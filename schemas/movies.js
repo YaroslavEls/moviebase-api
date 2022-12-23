@@ -26,90 +26,79 @@ const Movie = {
     }
 }
 
-const getAllMoviesSchema = {
-    schema: {
-        response: {
-            200: {
-                type: 'array',
-                items: Movie
-            }
-        }
-    },
-    handler: getAllMovies
-}
-
-const getMovieSchema = {
-    schema: {
-        response: {
-            200: Movie
-        }
-    },
-    handler: getMovie
-}
-
-const postMovieSchema = {
-    schema: {
-        body: {
-            type: 'object',
-            required: ['name', 'description', 'year'],
-            properties: {
-                name: {type: 'string'},
-                description: {type: 'string'},
-                year: {type: 'integer'}
-            }
-        },
-        response: {
-            201: Movie
-        }
-    },
-    handler: postMovie
-}
-
-const deleteMovieSchema = {
-    schema: {
-        response: {
-            200: {
-                type: 'object',
-                properties: {
-                    message: {type: 'string'}
+module.exports = {
+    getAllMoviesSchema: {
+        schema: {
+            response: {
+                200: {
+                    type: 'array',
+                    items: Movie
                 }
             }
-        }
+        },
+        handler: getAllMovies
     },
-    handler: deleteMovie
-}
 
-const updateMovieHandler = {
-    schema: {
-        body: {
-            type: 'object',
-            properties: {
-                name: {type: 'string'},
-                description: {type: 'string'},
-                year: {type: 'integer'}
+    getMovieSchema: {
+        schema: {
+            response: {
+                200: Movie
             }
         },
-        response: {
-            200: {
+        handler: getMovie
+    },
+
+    postMovieSchema: {
+        schema: {
+            body: {
                 type: 'object',
+                required: ['name', 'description', 'year'],
                 properties: {
-                    message: {type: 'string'}
+                    name: {type: 'string'},
+                    description: {type: 'string'},
+                    year: {type: 'integer'}
+                }
+            },
+            response: {
+                201: Movie
+            }
+        },
+        handler: postMovie
+    },
+
+    deleteMovieSchema: {
+        schema: {
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        message: {type: 'string'}
+                    }
                 }
             }
-        }
+        },
+        handler: deleteMovie
     },
-    handler: updateMovie
-}
 
-
-function moviesRoutes(app, options, done) {
-    app.get('/movies', getAllMoviesSchema);
-    app.get('/movies/:name', getMovieSchema);
-    app.post('/movies', postMovieSchema);
-    app.delete('/movies/:id', deleteMovieSchema)
-    app.put('/movies/:id', updateMovieHandler)
-
-    done();
-}
-
-module.exports = moviesRoutes;
+    updateMovieSchema: {
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    name: {type: 'string'},
+                    description: {type: 'string'},
+                    year: {type: 'integer'}
+                }
+            },
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        message: {type: 'string'}
+                    }
+                }
+            }
+        },
+        handler: updateMovie
+    }
+};

@@ -2,7 +2,7 @@ const {
     getGenres,
     createGenre,
     destroyGenre
-} = require('../database/repository/genreRepo')
+} = require('../database/interfaces/genre')
 
 const getAllGenres = async (req, reply) => {
     const result = await getGenres();

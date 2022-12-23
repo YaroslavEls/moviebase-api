@@ -4,7 +4,7 @@ const {
     getMovieByName,
     destroyMovie,
     refreshMovie
-} = require('../database/repository/movieRepo')
+} = require('../database/interfaces/movie')
 
 const getAllMovies = async (req, reply) => {
     const result = await getMovies();

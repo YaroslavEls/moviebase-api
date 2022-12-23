@@ -1,5 +1,5 @@
-const movieRepo = require('./repository/movieRepo');
-const genreRepo = require('./repository/genreRepo');
+const movieRepo = require('./interfaces/movie');
+const genreRepo = require('./interfaces/genre');
 
 const data_inserting = async() => {
     await movieRepo.createMovie({
