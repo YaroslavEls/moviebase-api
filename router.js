@@ -1,5 +1,6 @@
 const movieSchemas = require('./schemas/movies');
 const genreSchemas = require('./schemas/genres');
+const threadSchemas = require('./schemas/thread');
 
 function Routes(app, options, done) {
     app.get('/movies', movieSchemas.getAllMoviesSchema);
@@ -14,6 +15,12 @@ function Routes(app, options, done) {
 
     app.get('/genres/:id', movieSchemas.getByGenreSchema);
 
+    app.get('/threads', threadSchemas.getAllThreadsSchema);
+    app.get('/threads/:id', threadSchemas.getOneThreadSchema);
+    
+    app.get('/movies/:name/threads', threadSchemas.getByMovieSchema);
+    app.post('/movies/:name/threads', threadSchemas.postThreadSchema);
+    
     done();
 }
 
