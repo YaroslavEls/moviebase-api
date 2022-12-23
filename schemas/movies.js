@@ -3,7 +3,8 @@ const {
     getMovie,
     postMovie,
     deleteMovie,
-    updateMovie
+    updateMovie,
+    getByGenre
 } = require('../controllers/movies')
 
 const Movie = {
@@ -100,5 +101,17 @@ module.exports = {
             }
         },
         handler: updateMovie
-    }
+    },
+
+    getByGenreSchema: {
+        schema: {
+            response: {
+                200: {
+                    type: 'array',
+                    items: Movie
+                }
+            }
+        },
+        handler: getByGenre
+    },
 };

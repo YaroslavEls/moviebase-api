@@ -51,5 +51,16 @@ module.exports = {
                 id: num
             }
         });
+    },
+
+    async getMoviesByGenre(num) {
+        return await Movie.findAll({
+            include: {
+                model: Genre,
+                where: {
+                    id: num
+                }
+            }
+        });
     }
 }

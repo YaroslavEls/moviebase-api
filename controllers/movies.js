@@ -3,7 +3,8 @@ const {
     getMovies, 
     getMovieByName,
     destroyMovie,
-    refreshMovie
+    refreshMovie,
+    getMoviesByGenre
 } = require('../database/interfaces/movie')
 
 const getAllMovies = async (req, reply) => {
@@ -44,10 +45,19 @@ const updateMovie = async (req, reply) => {
     reply.send({message: `item ${id} has been updated`})
 }
 
+const getByGenre = async (req, reply) => {
+    const { id } = req.params;
+
+    const result = await getMoviesByGenre(id);
+
+    reply.send(result);
+}
+
 module.exports = {
     getAllMovies,
     getMovie,
     postMovie,
     deleteMovie,
-    updateMovie
+    updateMovie,
+    getByGenre
 }

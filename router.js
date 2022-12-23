@@ -12,6 +12,8 @@ function Routes(app, options, done) {
     app.post('/genres', genreSchemas.postGenreSchema);
     app.delete('/genres/:id', genreSchemas.deleteGenreSchema);
 
+    app.get('/genres/:id', movieSchemas.getByGenreSchema);
+
     done();
 }
 
