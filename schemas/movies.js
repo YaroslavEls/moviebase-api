@@ -12,7 +12,17 @@ const Movie = {
         id: {type: 'integer'},
         name: {type: 'string'},
         description: {type: 'string'},
-        year: {type: 'integer'}
+        year: {type: 'integer'},
+        genres: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    id: {type: 'integer'},
+                    name: {type: 'string'}
+                }
+            }
+        }
     }
 }
 
