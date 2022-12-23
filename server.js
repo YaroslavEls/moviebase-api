@@ -1,7 +1,8 @@
 require('dotenv').config()
 const app = require('fastify')({logger: true});
 app.register(require('./schemas/movies'));
-const seq = require('./database/connection')
+app.register(require('./schemas/genres'));
+const seq = require('./database/connection');
 const PORT = process.env.PORT;
 
 const start = async () => {
