@@ -1,19 +1,19 @@
-const User = require('../models/user');
+const User = require('../models/user.model');
 
 module.exports = {
-    async createUser(data) {
+    async create(data) {
         return await User.create(data);
     },
 
-    async getUsers() {
+    async getAll() {
         return await User.findAll();
     },
 
-    async getUserByName(str) {
+    async getOneByName(str) {
         return User.findOne({
             where: {
                 name: str
             }
         });
     }
-}
+};

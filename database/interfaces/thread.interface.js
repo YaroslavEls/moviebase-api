@@ -1,16 +1,15 @@
-const Thread = require('../models/thread');
-const Movie = require('../models/movie');
+const Thread = require('../models/thread.model');
 
 module.exports = {
-    async createThread(data) {
+    async create(data) {
         return await Thread.create(data);
     },
 
-    async getThreads() {
+    async getAll() {
         return await Thread.findAll();
     },
 
-    async getThread(num) {
+    async getOneById(num) {
         return await Thread.findOne({
             where: {
                 id: num
@@ -18,11 +17,11 @@ module.exports = {
         });
     },
 
-    async getThreadsByMovie(str) {
+    async getAllByMovie(str) {
         return await Thread.findAll({
             where: {
                 movie_name: str
             }
         });
     }
-}
+};

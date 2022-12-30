@@ -1,8 +1,4 @@
-const {
-    getAllGenres,
-    postGenre,
-    deleteGenre
-} = require('../controllers/genres');
+const GenreController = require('../controllers/genre.controller');
 
 const Genre = {
     type: 'object',
@@ -22,7 +18,7 @@ module.exports = {
                 }
             }
         },
-        handler: getAllGenres
+        handler: GenreController.getAllGenres
     },
     
     postGenreSchema: {
@@ -38,13 +34,13 @@ module.exports = {
                 201: Genre
             }
         },
-        handler: postGenre
+        handler: GenreController.postGenre
     },
     
     deleteGenreSchema: {
         schema: {
             response: {
-                200: {
+                204: {
                     type: 'object',
                     properties: {
                         message: {type: 'string'}
@@ -52,6 +48,6 @@ module.exports = {
                 }
             }
         },
-        handler: deleteGenre
+        handler: GenreController.deleteGenre
     }
-}
+};

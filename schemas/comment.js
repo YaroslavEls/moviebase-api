@@ -1,7 +1,4 @@
-const {
-    postComment,
-    getByThread
-} = require('../controllers/comments')
+const CommentController = require('../controllers/comment.controller');
 
 const Comment = {
     type: 'object',
@@ -12,7 +9,7 @@ const Comment = {
         user_id: {type: 'integer'},
         reply_to: {type: 'integer'}
     }
-}
+};
 
 module.exports = {
     postCommentSchema: {
@@ -30,7 +27,7 @@ module.exports = {
                 201: Comment
             }
         },
-        handler: postComment
+        handler: CommentController.postComment
     },
 
     getByThreadSchema: {
@@ -42,6 +39,6 @@ module.exports = {
                 }
             }
         },
-        handler: getByThread
-    },
-}
+        handler: CommentController.getCommentsByThread
+    }
+};

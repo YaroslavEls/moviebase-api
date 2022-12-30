@@ -1,19 +1,19 @@
-const Genre = require('../models/genre');
+const Genre = require('../models/genre.model');
 
 module.exports = {
-    async createGenre(data) {
+    async create(data) {
         return await Genre.create(data);
     },
     
-    async getGenres() {
+    async getAll() {
         return await Genre.findAll();
     },
     
-    async destroyGenre(num) {
+    async delete(num) {
         return await Genre.destroy({
             where: {
                 id: num
             }
         });
     }
-}
+};

@@ -1,9 +1,8 @@
-const { Op } = require("sequelize");
-const Movie = require('../models/movie');
-const Genre = require('../models/genre');
+const Movie = require('../models/movie.model');
+const Genre = require('../models/genre.model');
 
 module.exports = {
-    async createMovie(data) {
+    async create(data) {
         const movie = await Movie.create(data);
     
         if (data['genres']) {
@@ -21,15 +20,26 @@ module.exports = {
         return movie;
     },
     
-    async getMovies() {
+    async getAll() {
         return await Movie.findAll({
             include: {
                 model: Genre, as: 'genres'
             }
         });
     },
+
+    async getAllByGenre(num) {
+        return await Movie.findAll({
+            include: {
+                model: Genre,
+                where: {
+                    id: num
+                }
+            }
+        });
+    },
     
-    async getMovieByName(str) {
+    async getOneByName(str) {
         return await Movie.findOne({
             where: {
                 name: str
@@ -37,7 +47,7 @@ module.exports = {
         });
     },
     
-    async destroyMovie(num) {
+    async delete(num) {
         return await Movie.destroy({
             where: {
                 id: num
@@ -45,21 +55,10 @@ module.exports = {
         });
     },
     
-    async refreshMovie(num, data) {
+    async update(num, data) {
         return await Movie.update(data, {
             where: {
                 id: num
-            }
-        });
-    },
-
-    async getMoviesByGenre(num) {
-        return await Movie.findAll({
-            include: {
-                model: Genre,
-                where: {
-                    id: num
-                }
             }
         });
     }

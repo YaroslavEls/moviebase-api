@@ -1,11 +1,4 @@
-const {
-    getAllMovies,
-    getMovie,
-    postMovie,
-    deleteMovie,
-    updateMovie,
-    getByGenre
-} = require('../controllers/movies')
+const MovieController = require('../controllers/movie.controller');
 
 const Movie = {
     type: 'object',
@@ -25,7 +18,7 @@ const Movie = {
             }
         }
     }
-}
+};
 
 module.exports = {
     getAllMoviesSchema: {
@@ -37,16 +30,16 @@ module.exports = {
                 }
             }
         },
-        handler: getAllMovies
+        handler: MovieController.getAllMovies
     },
 
-    getMovieSchema: {
+    getOneMovieSchema: {
         schema: {
             response: {
                 200: Movie
             }
         },
-        handler: getMovie
+        handler: MovieController.getOneMovie
     },
 
     postMovieSchema: {
@@ -64,13 +57,13 @@ module.exports = {
                 201: Movie
             }
         },
-        handler: postMovie
+        handler: MovieController.postMovie
     },
 
     deleteMovieSchema: {
         schema: {
             response: {
-                200: {
+                204: {
                     type: 'object',
                     properties: {
                         message: {type: 'string'}
@@ -78,7 +71,7 @@ module.exports = {
                 }
             }
         },
-        handler: deleteMovie
+        handler: MovieController.deleteMovie
     },
 
     updateMovieSchema: {
@@ -100,10 +93,10 @@ module.exports = {
                 }
             }
         },
-        handler: updateMovie
+        handler: MovieController.updateMovie
     },
 
-    getByGenreSchema: {
+    getMoviesByGenreSchema: {
         schema: {
             response: {
                 200: {
@@ -112,6 +105,6 @@ module.exports = {
                 }
             }
         },
-        handler: getByGenre
-    },
+        handler: MovieController.getMoviesByGenre
+    }
 };

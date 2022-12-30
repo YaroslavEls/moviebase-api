@@ -1,9 +1,4 @@
-const {
-    getAllThreads,
-    getOneThread,
-    postThread,
-    getByMovie
-} = require('../controllers/threads');
+const ThreadController = require('../controllers/thread.controller');
 
 const Thread = {
     type: 'object',
@@ -14,7 +9,7 @@ const Thread = {
         movie_name: {type: 'string'},
         user_id: {type: 'integer'}
     }
-}
+};
 
 module.exports = {
     getAllThreadsSchema: {
@@ -26,7 +21,7 @@ module.exports = {
                 }
             }
         },
-        handler: getAllThreads
+        handler: ThreadController.getAllThreads
     },
 
     getOneThreadSchema: {
@@ -35,7 +30,7 @@ module.exports = {
                 200: Thread
             }
         },
-        handler: getOneThread
+        handler: ThreadController.getOneThread
     },
 
     postThreadSchema: {
@@ -53,10 +48,10 @@ module.exports = {
                 201: Thread
             }
         },
-        handler: postThread
+        handler: ThreadController.postThread
     },
 
-    getByMovieSchema: {
+    getThreadsByMovieSchema: {
         schema: {
             response: {
                 200: {
@@ -65,6 +60,6 @@ module.exports = {
                 }
             }
         },
-        handler: getByMovie
+        handler: ThreadController.getThreadsByMovie
     }
 };

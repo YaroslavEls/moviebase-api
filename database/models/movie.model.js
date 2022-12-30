@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const seq = require ('../connection');
 
-const Movie = seq.define('Movie', {
+const Movie = seq.define('movie', {
     id: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false,

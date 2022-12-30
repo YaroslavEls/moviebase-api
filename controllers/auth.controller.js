@@ -1,13 +1,10 @@
-const {
-    createUser,
-    getUserByName
-} = require('../database/interfaces/user')
+const UserInterface = require('../database/interfaces/user.interface');
 
 const login = async (req, reply) => {
     const name = req.body['name'];
     const password = req.body['password'];
 
-    const user = await getUserByName(name);
+    const user = await UserInterface.getOneByName(name);
 
     if (!user) {
         reply.code(400).send({message: `invalid username`})
@@ -18,17 +15,15 @@ const login = async (req, reply) => {
     }
 
     reply.code(200).send(user);
-}
+};
 
 const registration = async (req, reply) => {
-    const params = req.body;
-
-    const result = await createUser(params);
-
-    reply.send(result);
-}
+    const body = req.body;
+    const data = await UserInterface.create(body);
+    reply.code(201).send(data);
+};
 
 module.exports = {
     login,
     registration
-}
+};

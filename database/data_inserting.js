@@ -1,67 +1,38 @@
-const movie = require('./interfaces/movie');
-const genre = require('./interfaces/genre');
-const thread = require('./interfaces/thread')
+const movie = require('./interfaces/movie.interface');
+const genre = require('./interfaces/genre.interface');
+const thread = require('./interfaces/thread.interface')
 
 const data_inserting = async() => {
-    await movie.createMovie({
-        name: 'first',
-        description: 'the first one',
-        year: 2001
+    await movie.create({
+        name: 'Fargo',
+        description: 'Minnesota car salesman Jerry Lundegaard\'s inept crime falls apart due to his and his henchmen\'s bungling and the persistent police work of the quite pregnant Marge Gunderson.',
+        year: 1996
     });
-    await movie.createMovie({
-        name: 'second',
-        description: 'the second one',
-        year: 2002
+    await movie.create({
+        name: 'Who\'s Afraid of Virginia Woolf?',
+        description: 'It examines the complexities of the marriage of a middle-aged couple, Martha and George. Late one evening, after a university faculty party, they receive an unwitting younger couple, Nick and Honey, as guests, and draw them into their bitter and frustrated relationship.',
+        year: 1966
     });
-    await movie.createMovie({
-        name: 'third',
-        description: 'the third one',
-        year: 2003
-    });
-    await movie.createMovie({
-        name: 'fourth',
-        description: 'the fourth one',
-        year: 2004
-    });
-    await movie.createMovie({
-        name: 'fifth',
-        description: 'the fifth one',
-        year: 2005
+    await movie.create({
+        name: 'The Shawshank Redemption',
+        description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit.',
+        year: 1994
     });
 
-    await genre.createGenre({
-        name: 'qweqwe'
+    await genre.create({
+        name: 'Crime'
     });
-    await genre.createGenre({
-        name: 'asdasd'
+    await genre.create({
+        name: 'Drama'
     });
-    await genre.createGenre({
-        name: 'zxczxc'
+    await genre.create({
+        name: 'Thriller'
     });
-    await genre.createGenre({
-        name: 'tryrty'
+    await genre.create({
+        name: 'Comedy'
     });
-    await genre.createGenre({
-        name: 'fghfgh'
-    });
-
-    await thread.createThread({
-        title: 'New thread number one',
-        text: 'Some text of this thread bumber one lorem',
-        movie_name: 'first',
-        user_id: 1
-    });
-    await thread.createThread({
-        title: 'New thread number two',
-        text: 'Some text of this thread bumber two lorem',
-        movie_name: 'second',
-        user_id: 1
-    });
-    await thread.createThread({
-        title: 'New thread number three',
-        text: 'Some text of this thread bumber three lorem',
-        movie_name: 'second',
-        user_id: 1
+    await genre.create({
+        name: 'Historical'
     });
 }
 

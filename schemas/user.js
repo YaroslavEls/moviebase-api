@@ -1,10 +1,5 @@
-const {
-    getAllUsers
-} = require('../controllers/users');
-const {
-    registration,
-    login
-} = require('../controllers/auth');
+const UserController = require('../controllers/user.controller');
+const AuthController = require('../controllers/auth.controller');
 
 const User = {
     type: 'object',
@@ -14,7 +9,7 @@ const User = {
         email: {type: 'string'},
         password: {type: 'string'}
     }
-}
+};
 
 module.exports = {
     getAllUsersSchema: {
@@ -26,7 +21,7 @@ module.exports = {
                 }
             }
         },
-        handler: getAllUsers
+        handler: UserController.getAllUsers
     },
 
     registerUserSchema: {
@@ -41,11 +36,10 @@ module.exports = {
                 }
             },
             response: {
-                200: User,
                 201: User
             }
         },
-        handler: registration
+        handler: AuthController.registration
     },
 
     loginUserSchema: {
@@ -60,7 +54,6 @@ module.exports = {
             },
             response: {
                 200: User,
-                201: User,
                 400: {
                     type: 'object',
                     properties: {
@@ -69,6 +62,6 @@ module.exports = {
                 }
             }
         },
-        handler: login
+        handler: AuthController.login
     }
-}
+};
