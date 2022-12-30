@@ -23,5 +23,13 @@ module.exports = {
                 movie_name: str
             }
         });
+    },
+
+    async delete(num) {
+        return await Thread.destroy({
+            where: {
+                id: num
+            }
+        });
     }
 };

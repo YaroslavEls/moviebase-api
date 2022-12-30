@@ -37,11 +37,10 @@ module.exports = {
         schema: {
             body: {
                 type: 'object',
-                required: ['title', 'text', 'user_id'],
+                required: ['title', 'text'],
                 properties: {
                     title: {type: 'string'},
-                    text: {type: 'string'},
-                    user_id: {type: 'integer'}
+                    text: {type: 'string'}
                 }
             },
             response: {
@@ -61,5 +60,19 @@ module.exports = {
             }
         },
         handler: ThreadController.getThreadsByMovie
+    },
+
+    deleteThreadSchema: {
+        schema: {
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        message: {type: 'string'}
+                    }
+                }
+            }
+        },
+        handler: ThreadController.deleteThread
     }
 };

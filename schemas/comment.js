@@ -40,5 +40,19 @@ module.exports = {
             }
         },
         handler: CommentController.getCommentsByThread
+    },
+
+    deleteCommentSchema: {
+        schema: {
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        message: {type: 'string'}
+                    }
+                }
+            }
+        },
+        handler: CommentController.deleteComment
     }
 };
