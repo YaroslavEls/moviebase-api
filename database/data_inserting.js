@@ -50,7 +50,8 @@ const data_inserting = async() => {
     await UserInterface.create({
         email: 'zxczxc@gmail.com',
         name: 'Marcus',
-        password: 'zxc000'
+        password: 'zxc000',
+        role: 'admin'
     });
 
     await ThreadInterface.create({

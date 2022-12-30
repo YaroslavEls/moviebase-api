@@ -1,6 +1,12 @@
 const CommentInterface = require('../database/interfaces/comment.interface');
 
 const postComment = async (req, reply) => {
+    try {
+        const token = await req.jwtVerify();
+    } catch (err) {
+        reply.send(err);
+    }
+    
     const body = req.body;
     body['thread_id'] = +req.params['id'];
     const data = await CommentInterface.create(body);

@@ -12,6 +12,12 @@ const getOneThread = async (req, reply) => {
 };
 
 const postThread = async (req, reply) => {
+    try {
+        const token = await req.jwtVerify();
+    } catch (err) {
+        reply.send(err);
+    }
+
     const body = req.body;
     body['movie_name'] = req.params['name'];
     const data = await ThreadInterface.create(params);

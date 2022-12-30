@@ -1,22 +1,20 @@
 require('dotenv').config();
 const app = require('fastify')({logger: true});
-app.register(require('./router'));
 const seq = require('./database/connection');
 const associate = require('./database/associate');
 const data_inserting = require('./database/data_inserting');
-const PORT = process.env.PORT;
 
-const start = async () => {
+app.register(require('@fastify/jwt'), {secret: process.env.SECRET});
+app.register(require('./router'));
+
+(async () => {
     try {
         associate();
         await seq.sync({force: true});
         await data_inserting();
-        
-        await app.listen(PORT);
+        await app.listen(process.env.PORT);
     } catch (error) {
         app.log.error(error);
         process.exit(1);
     }
-}
-
-start();
+})();

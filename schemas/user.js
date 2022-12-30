@@ -7,7 +7,8 @@ const User = {
         id: {type: 'integer'},
         name: {type: 'string'},
         email: {type: 'string'},
-        password: {type: 'string'}
+        password: {type: 'string'},
+        role: {type: 'string'}
     }
 };
 
@@ -53,7 +54,14 @@ module.exports = {
                 }
             },
             response: {
-                200: User,
+                200: 
+                {
+                    type: 'object',
+                    properties: {
+                        ...User.properties,
+                        token: {tipe: 'string'}
+                    }
+                },
                 400: {
                     type: 'object',
                     properties: {

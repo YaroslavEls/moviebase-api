@@ -12,18 +12,48 @@ const getOneMovie = async (req, reply) => {
 };
 
 const postMovie = async (req, reply) => {
+    const requiredRole = 'admin';
+    try {
+        const token = await req.jwtVerify();
+        if (token['role'] !== requiredRole) {
+            reply.code(403).send({message: 'Permission denied'});
+        }
+    } catch (err) {
+        reply.send(err);
+    }
+    
     const body = req.body;
     await MovieInterface.create(body);
     reply.code(201).send(body);
 };
 
 const deleteMovie = async (req, reply) => {
+    const requiredRole = 'admin';
+    try {
+        const token = await req.jwtVerify();
+        if (token['role'] !== requiredRole) {
+            reply.code(403).send({message: 'Permission denied'});
+        }
+    } catch (err) {
+        reply.send(err);
+    }
+
     const id = req.params['id'];
     await MovieInterface.delete(id);
     reply.code(204).send({message: `item ${id} has been deleted`});
 };
 
 const updateMovie = async (req, reply) => {
+    const requiredRole = 'admin';
+    try {
+        const token = await req.jwtVerify();
+        if (token['role'] !== requiredRole) {
+            reply.code(403).send({message: 'Permission denied'});
+        }
+    } catch (err) {
+        reply.send(err);
+    }
+
     const id = req.params['id'];
     const body = req.body;
     await MovieInterface.update(id, body);
