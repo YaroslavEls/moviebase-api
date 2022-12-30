@@ -6,4 +6,6 @@ const seq = new Sequelize({
     storage: process.env.DB_STORAGE
 });
 
+seq.query(process.env.DB_REL_QUERY);
+
 module.exports = seq;
