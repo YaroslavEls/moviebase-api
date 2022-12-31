@@ -16,10 +16,9 @@ module.exports = {
         schema: {
             body: {
                 type: 'object',
-                required: ['text', 'user_id'],
+                required: ['text'],
                 properties: {
                     text: {type: 'string'},
-                    user_id: {type: 'integer'},
                     reply_to: {type: 'integer'}
                 }
             },
@@ -28,18 +27,6 @@ module.exports = {
             }
         },
         handler: CommentController.postComment
-    },
-
-    getByThreadSchema: {
-        schema: {
-            response: {
-                200: {
-                    type: 'array',
-                    items: Comment
-                }
-            }
-        },
-        handler: CommentController.getCommentsByThread
     },
 
     deleteCommentSchema: {

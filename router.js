@@ -25,10 +25,8 @@ function Routes(app, options, done) {
     app.get('/threads', threadSchemas.getAllThreadsSchema);
     app.get('/threads/:id', threadSchemas.getOneThreadSchema);
     app.delete('/threads/:id', threadSchemas.deleteThreadSchema);
-    app.get('/threads/:id/comments', commentSchemas.getByThreadSchema);
-    app.post('/threads/:id/comments', commentSchemas.postCommentSchema);
-    //comments
-    app.delete('/comments/:id', commentSchemas.deleteCommentSchema);
+    app.post('/threads/:id', commentSchemas.postCommentSchema);
+    app.delete('/threads/comments/:id', commentSchemas.deleteCommentSchema);
     //users
     app.get('/users', userSchema.getAllUsersSchema);
     

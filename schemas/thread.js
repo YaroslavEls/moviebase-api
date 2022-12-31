@@ -27,7 +27,25 @@ module.exports = {
     getOneThreadSchema: {
         schema: {
             response: {
-                200: Thread
+                200: {
+                    type: 'object',
+                    properties: {
+                        ...Thread.properties,
+                        comments: {
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    id: {type: 'integer'},
+                                    text: {type: 'string'},
+                                    thread_id: {type: 'integer'},
+                                    user_id: {type: 'integer'},
+                                    reply_to: {type: 'integer'}
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         handler: ThreadController.getOneThread

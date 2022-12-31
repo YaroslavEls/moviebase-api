@@ -15,12 +15,6 @@ const postComment = async (req, reply) => {
     reply.code(201).send(data);
 };
 
-const getCommentsByThread = async (req, reply) => {
-    const id = req.params['id'];
-    const data = await CommentInterface.getAllByThread(id);
-    reply.code(200).send(data);
-};
-
 const deleteComment = async (req, reply) => {
     const id = req.params['id'];
     const comment = await CommentInterface.getOneById(id);
@@ -44,6 +38,5 @@ const deleteComment = async (req, reply) => {
 
 module.exports = {
     postComment,
-    getCommentsByThread,
     deleteComment
 };

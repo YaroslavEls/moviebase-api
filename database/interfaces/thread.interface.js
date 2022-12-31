@@ -1,4 +1,5 @@
 const Thread = require('../models/thread.model');
+const Comment = require('../models/comment.model');
 
 module.exports = {
     async create(data) {
@@ -13,6 +14,9 @@ module.exports = {
         return await Thread.findOne({
             where: {
                 id: num
+            },
+            include: {
+                model: Comment, as: 'comments'
             }
         });
     },
