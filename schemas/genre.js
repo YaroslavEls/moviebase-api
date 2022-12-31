@@ -9,8 +9,11 @@ const Genre = {
 }
 
 module.exports = {
+    Genre,
+    
     getAllGenresSchema: {
         schema: {
+            tags: ['genres'],
             response: {
                 200: {
                     type: 'array',
@@ -23,6 +26,7 @@ module.exports = {
     
     postGenreSchema: {
         schema: {
+            tags: ['genres'],
             body: {
                 type: 'object',
                 required: ['name'],
@@ -39,6 +43,7 @@ module.exports = {
     
     deleteGenreSchema: {
         schema: {
+            tags: ['genres'],
             response: {
                 204: {
                     type: 'object',

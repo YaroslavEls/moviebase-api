@@ -12,8 +12,11 @@ const Thread = {
 };
 
 module.exports = {
+    Thread,
+    
     getAllThreadsSchema: {
         schema: {
+            tags: ['threads'],
             response: {
                 200: {
                     type: 'array',
@@ -26,6 +29,7 @@ module.exports = {
 
     getOneThreadSchema: {
         schema: {
+            tags: ['threads'],
             response: {
                 200: {
                     type: 'object',
@@ -53,6 +57,7 @@ module.exports = {
 
     postThreadSchema: {
         schema: {
+            tags: ['threads'],
             body: {
                 type: 'object',
                 required: ['title', 'text'],
@@ -70,6 +75,7 @@ module.exports = {
 
     getThreadsByMovieSchema: {
         schema: {
+            tags: ['threads'],
             response: {
                 200: {
                     type: 'array',
@@ -82,6 +88,7 @@ module.exports = {
 
     deleteThreadSchema: {
         schema: {
+            tags: ['threads'],
             response: {
                 200: {
                     type: 'object',

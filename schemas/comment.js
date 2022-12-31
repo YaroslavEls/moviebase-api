@@ -12,8 +12,11 @@ const Comment = {
 };
 
 module.exports = {
+    Comment,
+    
     postCommentSchema: {
         schema: {
+            tags: ['comments'],
             body: {
                 type: 'object',
                 required: ['text'],
@@ -31,6 +34,7 @@ module.exports = {
 
     deleteCommentSchema: {
         schema: {
+            tags: ['comments'],
             response: {
                 200: {
                     type: 'object',

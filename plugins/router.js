@@ -1,8 +1,8 @@
-const movieSchemas = require('./schemas/movie');
-const genreSchemas = require('./schemas/genre');
-const threadSchemas = require('./schemas/thread');
-const commentSchemas = require('./schemas/comment');
-const userSchema = require('./schemas/user');
+const movieSchemas = require('../schemas/movie');
+const genreSchemas = require('../schemas/genre');
+const threadSchemas = require('../schemas/thread');
+const commentSchemas = require('../schemas/comment');
+const userSchema = require('../schemas/user');
 
 function Routes(app, options, done) {
     // auth

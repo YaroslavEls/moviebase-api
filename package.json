@@ -20,6 +20,8 @@
   "homepage": "https://github.com/YaroslavEls/moviebase-api#readme",
   "dependencies": {
     "@fastify/jwt": "^6.5.0",
+    "@fastify/swagger": "^8.2.1",
+    "@fastify/swagger-ui": "^1.3.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "fastify": "^4.10.2",

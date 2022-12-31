@@ -21,8 +21,11 @@ const Movie = {
 };
 
 module.exports = {
+    Movie, 
+    
     getAllMoviesSchema: {
         schema: {
+            tags: ['movies'],
             response: {
                 200: {
                     type: 'array',
@@ -35,6 +38,7 @@ module.exports = {
 
     getOneMovieSchema: {
         schema: {
+            tags: ['movies'],
             response: {
                 200: Movie
             }
@@ -44,6 +48,7 @@ module.exports = {
 
     postMovieSchema: {
         schema: {
+            tags: ['movies'],
             body: {
                 type: 'object',
                 required: ['name', 'description', 'year'],
@@ -62,6 +67,7 @@ module.exports = {
 
     deleteMovieSchema: {
         schema: {
+            tags: ['movies'],
             response: {
                 204: {
                     type: 'object',
@@ -76,6 +82,7 @@ module.exports = {
 
     updateMovieSchema: {
         schema: {
+            tags: ['movies'],
             body: {
                 type: 'object',
                 properties: {
@@ -98,6 +105,7 @@ module.exports = {
 
     getMoviesByGenreSchema: {
         schema: {
+            tags: ['movies'],
             response: {
                 200: {
                     type: 'array',

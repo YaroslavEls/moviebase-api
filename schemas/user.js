@@ -13,8 +13,11 @@ const User = {
 };
 
 module.exports = {
+    User,
+    
     getAllUsersSchema: {
         schema: {
+            tags: ['users'],
             response: {
                 200: {
                     type: 'array',
@@ -27,6 +30,7 @@ module.exports = {
 
     registerUserSchema: {
         schema: {
+            tags: ['auth'],
             body: {
                 type: 'object',
                 required: ['email', 'name', 'password'],
@@ -45,6 +49,7 @@ module.exports = {
 
     loginUserSchema: {
         schema: {
+            tags: ['auth'],
             body: {
                 type: 'object',
                 required: ['name', 'password'],
