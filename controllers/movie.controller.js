@@ -18,12 +18,12 @@ const postMovie = async (req, reply) => {
     } catch (err) {
         return reply.send(err);
     }
-    
+
     const requiredRole = 'admin';
     if (token['role'] !== requiredRole) {
-        return reply.code(403).send({message: 'Permission denied'});
+        return reply.code(403).send({ message: 'Permission denied' });
     }
-    
+
     const body = req.body;
     await MovieInterface.create(body);
     reply.code(201).send(body);
@@ -36,15 +36,15 @@ const deleteMovie = async (req, reply) => {
     } catch (err) {
         return reply.send(err);
     }
-    
+
     const requiredRole = 'admin';
     if (token['role'] !== requiredRole) {
-        return reply.code(403).send({message: 'Permission denied'});
+        return reply.code(403).send({ message: 'Permission denied' });
     }
 
     const id = req.params['id'];
     await MovieInterface.delete(id);
-    reply.code(204).send({message: `item ${id} has been deleted`});
+    reply.code(204).send({ message: `item ${id} has been deleted` });
 };
 
 const updateMovie = async (req, reply) => {
@@ -54,16 +54,16 @@ const updateMovie = async (req, reply) => {
     } catch (err) {
         return reply.send(err);
     }
-    
+
     const requiredRole = 'admin';
     if (token['role'] !== requiredRole) {
-        return reply.code(403).send({message: 'Permission denied'});
+        return reply.code(403).send({ message: 'Permission denied' });
     }
 
     const id = req.params['id'];
     const body = req.body;
     await MovieInterface.update(id, body);
-    reply.code(200).send({message: `item ${id} has been updated`})
+    reply.code(200).send({ message: `item ${id} has been updated` });
 };
 
 const getMoviesByGenre = async (req, reply) => {

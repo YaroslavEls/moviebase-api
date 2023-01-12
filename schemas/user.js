@@ -4,17 +4,17 @@ const AuthController = require('../controllers/auth.controller');
 const User = {
     type: 'object',
     properties: {
-        id: {type: 'integer'},
-        name: {type: 'string'},
-        email: {type: 'string'},
-        password: {type: 'string'},
-        role: {type: 'string'}
+        id: { type: 'integer' },
+        name: { type: 'string' },
+        email: { type: 'string' },
+        password: { type: 'string' },
+        role: { type: 'string' }
     }
 };
 
 module.exports = {
     User,
-    
+
     getAllUsersSchema: {
         schema: {
             tags: ['users'],
@@ -35,9 +35,9 @@ module.exports = {
                 type: 'object',
                 required: ['email', 'name', 'password'],
                 properties: {
-                    email: {type: 'string'},
-                    name: {type: 'string'},
-                    password: {type: 'string'}
+                    email: { type: 'string' },
+                    name: { type: 'string' },
+                    password: { type: 'string' }
                 }
             },
             response: {
@@ -54,23 +54,23 @@ module.exports = {
                 type: 'object',
                 required: ['name', 'password'],
                 properties: {
-                    name: {type: 'string'},
-                    password: {type: 'string'}
+                    name: { type: 'string' },
+                    password: { type: 'string' }
                 }
             },
             response: {
-                200: 
+                200:
                 {
                     type: 'object',
                     properties: {
                         ...User.properties,
-                        token: {tipe: 'string'}
+                        token: { tipe: 'string' }
                     }
                 },
                 400: {
                     type: 'object',
                     properties: {
-                        message: {type: 'string'}
+                        message: { type: 'string' }
                     }
                 }
             }

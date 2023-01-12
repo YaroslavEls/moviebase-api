@@ -3,17 +3,17 @@ const CommentController = require('../controllers/comment.controller');
 const Comment = {
     type: 'object',
     properties: {
-        id: {type: 'integer'},
-        text: {type: 'string'},
-        thread_id: {type: 'integer'},
-        user_id: {type: 'integer'},
-        reply_to: {type: 'integer'}
+        id: { type: 'integer' },
+        text: { type: 'string' },
+        thread_id: { type: 'integer' },
+        user_id: { type: 'integer' },
+        reply_to: { type: 'integer' }
     }
 };
 
 module.exports = {
     Comment,
-    
+
     postCommentSchema: {
         schema: {
             tags: ['comments'],
@@ -21,8 +21,8 @@ module.exports = {
                 type: 'object',
                 required: ['text'],
                 properties: {
-                    text: {type: 'string'},
-                    reply_to: {type: 'integer'}
+                    text: { type: 'string' },
+                    reply_to: { type: 'integer' }
                 }
             },
             response: {
@@ -39,7 +39,7 @@ module.exports = {
                 200: {
                     type: 'object',
                     properties: {
-                        message: {type: 'string'}
+                        message: { type: 'string' }
                     }
                 }
             }

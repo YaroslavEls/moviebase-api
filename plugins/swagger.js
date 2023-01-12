@@ -12,7 +12,7 @@ module.exports = {
                 title: 'moviebase-api',
                 version: '0.1.0'
             },
-            host: 'localhost:' + process.env.PORT,
+            host: process.env.HOST + process.env.PORT,
             tags: [
                 { name: 'auth', description: 'Authentication related end-points' },
                 { name: 'movies', description: 'Movies related end-points' },
@@ -34,4 +34,4 @@ module.exports = {
     swaggerUi: {
         routePrefix: '/docs'
     }
-}
+};

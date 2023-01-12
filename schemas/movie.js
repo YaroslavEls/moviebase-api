@@ -3,17 +3,17 @@ const MovieController = require('../controllers/movie.controller');
 const Movie = {
     type: 'object',
     properties: {
-        id: {type: 'integer'},
-        name: {type: 'string'},
-        description: {type: 'string'},
-        year: {type: 'integer'},
+        id: { type: 'integer' },
+        name: { type: 'string' },
+        description: { type: 'string' },
+        year: { type: 'integer' },
         genres: {
             type: 'array',
             items: {
                 type: 'object',
                 properties: {
-                    id: {type: 'integer'},
-                    name: {type: 'string'}
+                    id: { type: 'integer' },
+                    name: { type: 'string' }
                 }
             }
         }
@@ -21,8 +21,8 @@ const Movie = {
 };
 
 module.exports = {
-    Movie, 
-    
+    Movie,
+
     getAllMoviesSchema: {
         schema: {
             tags: ['movies'],
@@ -53,9 +53,9 @@ module.exports = {
                 type: 'object',
                 required: ['name', 'description', 'year'],
                 properties: {
-                    name: {type: 'string'},
-                    description: {type: 'string'},
-                    year: {type: 'integer'}
+                    name: { type: 'string' },
+                    description: { type: 'string' },
+                    year: { type: 'integer' }
                 }
             },
             response: {
@@ -72,7 +72,7 @@ module.exports = {
                 204: {
                     type: 'object',
                     properties: {
-                        message: {type: 'string'}
+                        message: { type: 'string' }
                     }
                 }
             }
@@ -86,16 +86,16 @@ module.exports = {
             body: {
                 type: 'object',
                 properties: {
-                    name: {type: 'string'},
-                    description: {type: 'string'},
-                    year: {type: 'integer'}
+                    name: { type: 'string' },
+                    description: { type: 'string' },
+                    year: { type: 'integer' }
                 }
             },
             response: {
                 200: {
                     type: 'object',
                     properties: {
-                        message: {type: 'string'}
+                        message: { type: 'string' }
                     }
                 }
             }

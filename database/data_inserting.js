@@ -4,7 +4,7 @@ const UserInterface = require('./interfaces/user.interface');
 const ThreadInterface = require('./interfaces/thread.interface');
 const CommentInterface = require('./interfaces/comment.interface');
 
-const data_inserting = async() => {
+const data_inserting = async () => {
     await MovieInterface.create({
         name: 'Fargo',
         description: 'Minnesota car salesman Jerry Lundegaard\'s inept crime falls apart due to his and his henchmen\'s bungling and the persistent police work of the quite pregnant Marge Gunderson.',

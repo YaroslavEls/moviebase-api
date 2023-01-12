@@ -4,22 +4,22 @@ const Genre = require('../models/genre.model');
 module.exports = {
     async create(data) {
         const movie = await Movie.create(data);
-    
+
         if (data['genres']) {
             const genres = await Genre.findAll({
                 where: {
                     id: data['genres'],
                 }
             });
-    
+
             for (let i = 0; i < genres.length; i++) {
                 await movie.addGenre(genres[i]);
             }
         }
-    
+
         return movie;
     },
-    
+
     async getAll() {
         return await Movie.findAll({
             include: {
@@ -38,7 +38,7 @@ module.exports = {
             }
         });
     },
-    
+
     async getOneByName(str) {
         return await Movie.findOne({
             where: {
@@ -46,7 +46,7 @@ module.exports = {
             }
         });
     },
-    
+
     async delete(num) {
         return await Movie.destroy({
             where: {
@@ -54,7 +54,7 @@ module.exports = {
             }
         });
     },
-    
+
     async update(num, data) {
         return await Movie.update(data, {
             where: {
@@ -62,4 +62,4 @@ module.exports = {
             }
         });
     }
-}
+};

@@ -3,17 +3,17 @@ const ThreadController = require('../controllers/thread.controller');
 const Thread = {
     type: 'object',
     properties: {
-        id: {type: 'integer'},
-        title: {type: 'string'},
-        text: {type: 'string'},
-        movie_name: {type: 'string'},
-        user_id: {type: 'integer'}
+        id: { type: 'integer' },
+        title: { type: 'string' },
+        text: { type: 'string' },
+        movie_name: { type: 'string' },
+        user_id: { type: 'integer' }
     }
 };
 
 module.exports = {
     Thread,
-    
+
     getAllThreadsSchema: {
         schema: {
             tags: ['threads'],
@@ -40,11 +40,11 @@ module.exports = {
                             items: {
                                 type: 'object',
                                 properties: {
-                                    id: {type: 'integer'},
-                                    text: {type: 'string'},
-                                    thread_id: {type: 'integer'},
-                                    user_id: {type: 'integer'},
-                                    reply_to: {type: 'integer'}
+                                    id: { type: 'integer' },
+                                    text: { type: 'string' },
+                                    thread_id: { type: 'integer' },
+                                    user_id: { type: 'integer' },
+                                    reply_to: { type: 'integer' }
                                 }
                             }
                         }
@@ -62,8 +62,8 @@ module.exports = {
                 type: 'object',
                 required: ['title', 'text'],
                 properties: {
-                    title: {type: 'string'},
-                    text: {type: 'string'}
+                    title: { type: 'string' },
+                    text: { type: 'string' }
                 }
             },
             response: {
@@ -93,7 +93,7 @@ module.exports = {
                 200: {
                     type: 'object',
                     properties: {
-                        message: {type: 'string'}
+                        message: { type: 'string' }
                     }
                 }
             }

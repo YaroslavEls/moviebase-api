@@ -12,10 +12,10 @@ const postGenre = async (req, reply) => {
     } catch (err) {
         return reply.send(err);
     }
-    
+
     const requiredRole = 'admin';
     if (token['role'] !== requiredRole) {
-        return reply.code(403).send({message: 'Permission denied'});
+        return reply.code(403).send({ message: 'Permission denied' });
     }
 
     const body = req.body;
@@ -30,15 +30,15 @@ const deleteGenre = async (req, reply) => {
     } catch (err) {
         return reply.send(err);
     }
-    
+
     const requiredRole = 'admin';
     if (token['role'] !== requiredRole) {
-        return reply.code(403).send({message: 'Permission denied'});
+        return reply.code(403).send({ message: 'Permission denied' });
     }
-    
+
     const id = req.params['id'];
     await GenreInterface.delete(id);
-    reply.code(204).send({message: `genre ${id} has been deleted`});
+    reply.code(204).send({ message: `genre ${id} has been deleted` });
 };
 
 module.exports = {

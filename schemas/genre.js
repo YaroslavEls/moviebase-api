@@ -3,14 +3,14 @@ const GenreController = require('../controllers/genre.controller');
 const Genre = {
     type: 'object',
     properties: {
-        id: {type: 'integer'},
-        name: {type: 'string'}
+        id: { type: 'integer' },
+        name: { type: 'string' }
     }
-}
+};
 
 module.exports = {
     Genre,
-    
+
     getAllGenresSchema: {
         schema: {
             tags: ['genres'],
@@ -23,7 +23,7 @@ module.exports = {
         },
         handler: GenreController.getAllGenres
     },
-    
+
     postGenreSchema: {
         schema: {
             tags: ['genres'],
@@ -31,7 +31,7 @@ module.exports = {
                 type: 'object',
                 required: ['name'],
                 properties: {
-                    name: {type: 'string'}
+                    name: { type: 'string' }
                 }
             },
             response: {
@@ -40,7 +40,7 @@ module.exports = {
         },
         handler: GenreController.postGenre
     },
-    
+
     deleteGenreSchema: {
         schema: {
             tags: ['genres'],
@@ -48,7 +48,7 @@ module.exports = {
                 204: {
                     type: 'object',
                     properties: {
-                        message: {type: 'string'}
+                        message: { type: 'string' }
                     }
                 }
             }

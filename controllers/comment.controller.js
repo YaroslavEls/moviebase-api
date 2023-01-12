@@ -7,7 +7,7 @@ const postComment = async (req, reply) => {
     } catch (err) {
         return reply.send(err);
     }
-    
+
     const body = req.body;
     body['user_id'] = token['user_id'];
     body['thread_id'] = +req.params['id'];
@@ -26,14 +26,14 @@ const deleteComment = async (req, reply) => {
         return reply.send(err);
     }
 
-    cond1 = ( token['user_id'] == comment.user_id );
-    cond2 = ( token['role'] == requiredRole );
+    const cond1 = (token['user_id'] === comment.user_id);
+    const cond2 = (token['role'] === requiredRole);
     if (!cond1 && !cond2) {
-        return reply.code(403).send({message: 'Permission denied'});
+        return reply.code(403).send({ message: 'Permission denied' });
     }
 
     await CommentInterface.delete(id);
-    reply.code(200).send({message: `comment ${id} has been deleted`});
+    reply.code(200).send({ message: `comment ${id} has been deleted` });
 };
 
 module.exports = {

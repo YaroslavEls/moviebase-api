@@ -8,19 +8,19 @@ const login = async (req, reply) => {
     const user = await UserInterface.getOneByName(name);
 
     if (!user) {
-        reply.code(400).send({message: `Invalid username`});
+        reply.code(400).send({ message: 'Invalid username' });
     }
 
     const passCheck = bcrypt.compareSync(password, user.password);
     if (!passCheck) {
-        reply.code(400).send({message: `Invalid password`});
+        reply.code(400).send({ message: 'Invalid password' });
     }
 
     const token = await reply.jwtSign({
         user_id: user.id,
         role: user.role
     });
-    
+
     user.dataValues.token = token;
     reply.code(200).send(user);
 };

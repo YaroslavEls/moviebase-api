@@ -43,14 +43,14 @@ const deleteThread = async (req, reply) => {
         return reply.send(err);
     }
 
-    cond1 = ( token['user_id'] == thread.user_id );
-    cond2 = ( token['role'] == requiredRole );
+    const cond1 = (token['user_id'] === thread.user_id);
+    const cond2 = (token['role'] === requiredRole);
     if (!cond1 && !cond2) {
-        return reply.code(403).send({message: 'Permission denied'});
+        return reply.code(403).send({ message: 'Permission denied' });
     }
 
     await ThreadInterface.delete(id);
-    reply.code(200).send({message: `thread ${id} has been deleted`});
+    reply.code(200).send({ message: `thread ${id} has been deleted` });
 };
 
 module.exports = {

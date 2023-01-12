@@ -24,7 +24,7 @@ const User = seq.define('user', {
     },
     role: {
         type: Sequelize.DataTypes.STRING,
-        defaultValue: "default"
+        defaultValue: 'default'
     }
 });
 
