@@ -28,6 +28,9 @@ function Routes(app, options, done) {
     app.delete('/threads/comments/:id', commentSchemas.deleteCommentSchema);
 
     app.get('/users', userSchema.getAllUsersSchema);
+    app.get('/users/:id', userSchema.getOneUserSchema);
+    app.post('/users/:id', userSchema.postUserFollowSchema);
+    app.delete('/users/:id', userSchema.deleteUserFollowSchema);
 
     done();
 }

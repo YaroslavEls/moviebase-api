@@ -7,7 +7,8 @@ const Thread = {
         title: { type: 'string' },
         text: { type: 'string' },
         movie_name: { type: 'string' },
-        user_id: { type: 'integer' }
+        user_id: { type: 'integer' },
+        is_review: {type: 'boolean'}
     }
 };
 

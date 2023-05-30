@@ -23,6 +23,10 @@ const Thread = seq.define('thread', {
     user_id: {
         type: Sequelize.DataTypes.INTEGER,
         allowNull: false
+    },
+    is_review: {
+        type: Sequelize.DataTypes.BOOLEAN,
+        allowNull: false
     }
 });
 

@@ -3,3 +3,4 @@ node_modules/
 test.http
 test/
 *.db
+what-to-add.txt

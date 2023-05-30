@@ -5,22 +5,6 @@ const ThreadInterface = require('./interfaces/thread.interface');
 const CommentInterface = require('./interfaces/comment.interface');
 
 const data_inserting = async () => {
-    await MovieInterface.create({
-        name: 'Fargo',
-        description: 'Minnesota car salesman Jerry Lundegaard\'s inept crime falls apart due to his and his henchmen\'s bungling and the persistent police work of the quite pregnant Marge Gunderson.',
-        year: 1996
-    });
-    await MovieInterface.create({
-        name: 'Who\'s Afraid of Virginia Woolf?',
-        description: 'It examines the complexities of the marriage of a middle-aged couple, Martha and George. Late one evening, after a university faculty party, they receive an unwitting younger couple, Nick and Honey, as guests, and draw them into their bitter and frustrated relationship.',
-        year: 1966
-    });
-    await MovieInterface.create({
-        name: 'The Shawshank Redemption',
-        description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit.',
-        year: 1994
-    });
-
     await GenreInterface.create({
         name: 'Crime'
     });
@@ -35,6 +19,25 @@ const data_inserting = async () => {
     });
     await GenreInterface.create({
         name: 'Historical'
+    });
+
+    await MovieInterface.create({
+        name: 'Fargo',
+        description: 'Minnesota car salesman Jerry Lundegaard\'s inept crime falls apart due to his and his henchmen\'s bungling and the persistent police work of the quite pregnant Marge Gunderson.',
+        year: 1996,
+        genres: [1, 2, 3]
+    });
+    await MovieInterface.create({
+        name: 'Who\'s Afraid of Virginia Woolf?',
+        description: 'It examines the complexities of the marriage of a middle-aged couple, Martha and George. Late one evening, after a university faculty party, they receive an unwitting younger couple, Nick and Honey, as guests, and draw them into their bitter and frustrated relationship.',
+        year: 1966,
+        genres: [2, 3, 4]
+    });
+    await MovieInterface.create({
+        name: 'The Shawshank Redemption',
+        description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency. Chronicles the experiences of a formerly successful banker as a prisoner in the gloomy jailhouse of Shawshank after being found guilty of a crime he did not commit.',
+        year: 1994,
+        genres: [1, 2]
     });
 
     await UserInterface.create({
@@ -58,19 +61,22 @@ const data_inserting = async () => {
         title: 'What is this movie really about?',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         movie_name: 'The Shawshank Redemption',
-        user_id: 1
+        user_id: 1,
+        is_review: false
     });
     await ThreadInterface.create({
         title: 'Things that should have been removed from movie',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         movie_name: 'The Shawshank Redemption',
-        user_id: 3
+        user_id: 3,
+        is_review: true
     });
     await ThreadInterface.create({
         title: 'My final review of this movie',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         movie_name: 'Fargo',
-        user_id: 2
+        user_id: 2,
+        is_review: false
     });
 
     await CommentInterface.create({

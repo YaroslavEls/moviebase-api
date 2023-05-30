@@ -32,6 +32,17 @@ const associate = () => {
         sourceKey: 'id'
     });
 
+    User.belongsToMany(User, {
+        as: 'followers',
+        through: 'follows',
+        foreignKey: 'followers'
+    });
+    User.belongsToMany(User, {
+        as: 'followings',
+        through: 'follows',
+        foreignKey: 'followings'
+    });
+
     User.hasMany(Thread, {
         foreignKey: 'user_id',
         sourceKey: 'id'

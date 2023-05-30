@@ -8,7 +8,29 @@ const User = {
         name: { type: 'string' },
         email: { type: 'string' },
         password: { type: 'string' },
-        role: { type: 'string' }
+        role: { type: 'string' },
+        followers: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    id: { type: 'integer' },
+                    name: { type: 'string' },
+                    email: { type: 'string' }
+                }
+            }
+        },
+        followings: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    id: { type: 'integer' },
+                    name: { type: 'string' },
+                    email: { type: 'string' }
+                }
+            }
+        }
     }
 };
 
@@ -26,6 +48,36 @@ module.exports = {
             }
         },
         handler: UserController.getAllUsers
+    },
+
+    getOneUserSchema: {
+        schema: {
+            tags: ['users'],
+            response: {
+                200: User
+            }
+        },
+        handler: UserController.getOneUser
+    },
+
+    postUserFollowSchema: {
+        schema: {
+            tags: ['users'],
+            response: {
+                200: User
+            }
+        },
+        handler: UserController.postUserFollow
+    },
+
+    deleteUserFollowSchema: {
+        schema: {
+            tags: ['users'],
+            response: {
+                200: User
+            }
+        },
+        handler: UserController.deleteUserFollow
     },
 
     registerUserSchema: {

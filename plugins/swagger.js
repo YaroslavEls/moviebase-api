@@ -10,7 +10,7 @@ module.exports = {
         swagger: {
             info: {
                 title: 'moviebase-api',
-                version: '0.1.0'
+                version: '1.0'
             },
             host: process.env.HOST + process.env.PORT,
             tags: [
