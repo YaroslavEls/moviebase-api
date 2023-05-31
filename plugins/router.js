@@ -38,6 +38,8 @@ function Routes(app, options, done) {
     app.post('/compilations', compSchema.postCompSchema);
     app.delete('/compilations/:id', compSchema.deleteCompSchema);
     app.put('/compilations/:id', compSchema.updateCompSchema);
+    app.post('/compilations/:comp_id/:movie_id', compSchema.addMovieCompSchema);
+    app.delete('/compilations/:comp_id/:movie_id', compSchema.removeMovieCompSchema);
 
     done();
 }

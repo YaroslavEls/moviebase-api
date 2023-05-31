@@ -67,10 +67,54 @@ const updateComp = async (req, reply) => {
     reply.code(204).send({ message: `item ${id} has been updated` });
 };
 
+const addMovieComp = async (req, reply) => {
+    let token;
+    try {
+        token = await req.jwtVerify();
+    } catch (err) {
+        return reply.send(err);
+    }
+
+    const id = parseInt(req.params['comp_id']);
+    const owner = await CompInterface.getOwner(id);
+
+    if (owner.user_id != token['user_id']) {
+        return reply.code(403).send({ message: 'Permission denied' });
+    }
+
+    const comp_id = parseInt(req.params['comp_id']);
+    const movie_id = parseInt(req.params['movie_id']);
+    const data = await CompInterface.addMovie(comp_id, movie_id);
+    reply.code(200).send(data);
+};
+
+const removeMovieComp = async (req, reply) => {
+    let token;
+    try {
+        token = await req.jwtVerify();
+    } catch (err) {
+        return reply.send(err);
+    }
+
+    const id = parseInt(req.params['comp_id']);
+    const owner = await CompInterface.getOwner(id);
+
+    if (owner.user_id != token['user_id']) {
+        return reply.code(403).send({ message: 'Permission denied' });
+    }
+
+    const comp_id = parseInt(req.params['comp_id']);
+    const movie_id = parseInt(req.params['movie_id']);
+    const data = await CompInterface.removeMovie(comp_id, movie_id);
+    reply.code(200).send(data);
+};
+
 module.exports = {
     getAllComps,
     getOneComp,
     postComp,
     deleteComp,
-    updateComp
+    updateComp,
+    addMovieComp,
+    removeMovieComp
 };

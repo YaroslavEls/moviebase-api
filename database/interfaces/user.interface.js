@@ -1,4 +1,5 @@
 const User = require('../models/user.model.js');
+const Compilation = require('../models/comp.model.js');
 
 module.exports = {
     async create(data) {
@@ -8,6 +9,7 @@ module.exports = {
     async getAll() {
         return await User.findAll({
             include: [
+                { model: Compilation, as: 'compilations' },
                 { model: User, as: 'followers' },
                 { model: User, as: 'followings' }
             ]
@@ -20,6 +22,7 @@ module.exports = {
                 id: num
             },
             include: [
+                { model: Compilation, as: 'compilations' },
                 { model: User, as: 'followers' },
                 { model: User, as: 'followings' }
             ]
@@ -35,21 +38,13 @@ module.exports = {
     },
 
     async postFollow(num1, num2) {
-        const user = await User.findOne({
-            where: {
-                id: num1
-            }
-        });
+        const user = await User.findByPk(num1);
         await user.addFollowing(num2);
         return user;
     },
 
     async deleteFollow(num1, num2) {
-        const user = await User.findOne({
-            where: {
-                id: num1
-            }
-        });
+        const user = await User.findByPk(num1);
         await user.removeFollowing(num2);
         return user;
     }

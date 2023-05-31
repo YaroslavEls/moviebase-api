@@ -1,4 +1,5 @@
 const Compilation = require('../models/comp.model.js');
+const Movie = require('../models/movie.model.js');
 
 module.exports = {
     async create(data) {
@@ -6,11 +7,24 @@ module.exports = {
     },
 
     async getAll() {
-        return await Compilation.findAll();
+        return await Compilation.findAll({
+            include: {
+                model: Movie,
+                as: 'movies'
+            }
+        });
     },
 
     async getOneById(num) {
-        return await Compilation.findByPk(num);
+        return await Compilation.findOne({
+            where: {
+                id: num
+            },
+            include: {
+                model: Movie,
+                as: 'movies'
+            }
+        });
     },
 
     async getOwner(num) {
@@ -36,5 +50,17 @@ module.exports = {
                 id: num
             }
         });
+    },
+
+    async addMovie(num1, num2) {
+        const comp = await Compilation.findOne(num1);
+        await comp.addMovie(num2);
+        return comp;
+    },
+
+    async removeMovie(num1, num2) {
+        const comp = await Compilation.findByPk(num1);
+        await comp.removeMovie(num2);
+        return comp;
     }
 };

@@ -1,4 +1,5 @@
 const CompController = require('../controllers/comp.controller.js');
+const { Movie } = require('./movie.js')
 
 const Compilation = {
     type: 'object',
@@ -6,7 +7,11 @@ const Compilation = {
         id: { type: 'integer' },
         title: { type: 'string' },
         desc: { type: 'string' },
-        user_id: { type: 'integer' }
+        user_id: { type: 'integer' },
+        movies: {
+            type: 'array',
+            items: Movie
+        }
     }
 };
 
@@ -94,5 +99,25 @@ module.exports = {
             }
         },
         handler: CompController.updateComp
+    },
+
+    addMovieCompSchema: {
+        schema: {
+            tags: ['compilations'],
+            response: {
+                200: Compilation
+            }
+        },
+        handler: CompController.addMovieComp
+    },
+
+    removeMovieCompSchema: {
+        schema: {
+            tags: ['compilations'],
+            response: {
+                200: Compilation
+            }
+        },
+        handler: CompController.removeMovieComp
     }
 };

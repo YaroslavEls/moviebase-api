@@ -1,5 +1,6 @@
 const UserController = require('../controllers/user.controller.js');
 const AuthController = require('../controllers/auth.controller.js');
+const { Compilation } = require('./comp.js');
 
 const Follow = {
     type: 'object',
@@ -18,6 +19,10 @@ const User = {
         email: { type: 'string' },
         password: { type: 'string' },
         role: { type: 'string' },
+        compilations: {
+            type: 'array',
+            items: Compilation
+        },
         followers: {
             type: 'array',
             items: Follow
