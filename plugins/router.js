@@ -3,6 +3,7 @@ const genreSchemas = require('../schemas/genre.js');
 const threadSchemas = require('../schemas/thread.js');
 const commentSchemas = require('../schemas/comment.js');
 const userSchema = require('../schemas/user.js');
+const compSchema = require('../schemas/comp.js');
 
 function Routes(app, options, done) {
     app.post('/registration', userSchema.registerUserSchema);
@@ -31,6 +32,12 @@ function Routes(app, options, done) {
     app.get('/users/:id', userSchema.getOneUserSchema);
     app.post('/users/:id', userSchema.postUserFollowSchema);
     app.delete('/users/:id', userSchema.deleteUserFollowSchema);
+
+    app.get('/compilations', compSchema.getAllCompsSchema);
+    app.get('/compilations/:id', compSchema.getOneCompSchema);
+    app.post('/compilations', compSchema.postCompSchema);
+    app.delete('/compilations/:id', compSchema.deleteCompSchema);
+    app.put('/compilations/:id', compSchema.updateCompSchema);
 
     done();
 }

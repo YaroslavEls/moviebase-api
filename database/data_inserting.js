@@ -3,6 +3,7 @@ const GenreInterface = require('./interfaces/genre.interface.js');
 const UserInterface = require('./interfaces/user.interface.js');
 const ThreadInterface = require('./interfaces/thread.interface.js');
 const CommentInterface = require('./interfaces/comment.interface.js');
+const CompilationInterface = require('./interfaces/comp.interface.js');
 
 const data_inserting = async () => {
     await GenreInterface.create({
@@ -106,6 +107,21 @@ const data_inserting = async () => {
         thread_id: 3,
         user_id: 1,
         reply_to: 3
+    });
+
+    await CompilationInterface.create({
+        title: 'idunt ut labore et dolore magna aliq',
+        desc: 'Lorem ipsum dolor sit idunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        user_id: 1,
+    });
+    await CompilationInterface.create({
+        title: 'xercitation ullamc',
+        user_id: 2,
+    });
+    await CompilationInterface.create({
+        title: 'consectetur adipiscing elit',
+        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor im veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        user_id: 2,
     });
 };
 
