@@ -6,11 +6,7 @@ module.exports = {
     },
 
     async getOneById(num) {
-        return await Comment.findOne({
-            where: {
-                id: num
-            }
-        });
+        return await Comment.findByPk(num);
     },
 
     async delete(num) {

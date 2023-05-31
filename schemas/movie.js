@@ -1,4 +1,5 @@
 const MovieController = require('../controllers/movie.controller.js');
+const { Genre } = require('./genre.js')
 
 const Movie = {
     type: 'object',
@@ -9,13 +10,7 @@ const Movie = {
         year: { type: 'integer' },
         genres: {
             type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: { type: 'integer' },
-                    name: { type: 'string' }
-                }
-            }
+            items: Genre
         }
     }
 };
@@ -44,6 +39,19 @@ module.exports = {
             }
         },
         handler: MovieController.getOneMovie
+    },
+
+    getMoviesByGenreSchema: {
+        schema: {
+            tags: ['movies'],
+            response: {
+                200: {
+                    type: 'array',
+                    items: Movie
+                }
+            }
+        },
+        handler: MovieController.getMoviesByGenre
     },
 
     postMovieSchema: {
@@ -101,18 +109,5 @@ module.exports = {
             }
         },
         handler: MovieController.updateMovie
-    },
-
-    getMoviesByGenreSchema: {
-        schema: {
-            tags: ['movies'],
-            response: {
-                200: {
-                    type: 'array',
-                    items: Movie
-                }
-            }
-        },
-        handler: MovieController.getMoviesByGenre
     }
 };

@@ -1,4 +1,5 @@
 const ThreadController = require('../controllers/thread.controller.js');
+const { Comment } = require('./comment.js')
 
 const Thread = {
     type: 'object',
@@ -8,7 +9,11 @@ const Thread = {
         text: { type: 'string' },
         movie_name: { type: 'string' },
         user_id: { type: 'integer' },
-        is_review: {type: 'boolean'}
+        is_review: {type: 'boolean'},
+        comments: {
+            type: 'array',
+            items: Comment
+        }
     }
 };
 
@@ -32,28 +37,23 @@ module.exports = {
         schema: {
             tags: ['threads'],
             response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        ...Thread.properties,
-                        comments: {
-                            type: 'array',
-                            items: {
-                                type: 'object',
-                                properties: {
-                                    id: { type: 'integer' },
-                                    text: { type: 'string' },
-                                    thread_id: { type: 'integer' },
-                                    user_id: { type: 'integer' },
-                                    reply_to: { type: 'integer' }
-                                }
-                            }
-                        }
-                    }
-                }
+                200: Thread
             }
         },
         handler: ThreadController.getOneThread
+    },
+
+    getThreadsByMovieSchema: {
+        schema: {
+            tags: ['threads'],
+            response: {
+                200: {
+                    type: 'array',
+                    items: Thread
+                }
+            }
+        },
+        handler: ThreadController.getThreadsByMovie
     },
 
     postThreadSchema: {
@@ -74,24 +74,11 @@ module.exports = {
         handler: ThreadController.postThread
     },
 
-    getThreadsByMovieSchema: {
-        schema: {
-            tags: ['threads'],
-            response: {
-                200: {
-                    type: 'array',
-                    items: Thread
-                }
-            }
-        },
-        handler: ThreadController.getThreadsByMovie
-    },
-
     deleteThreadSchema: {
         schema: {
             tags: ['threads'],
             response: {
-                200: {
+                204: {
                     type: 'object',
                     properties: {
                         message: { type: 'string' }

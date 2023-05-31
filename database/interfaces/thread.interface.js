@@ -7,7 +7,12 @@ module.exports = {
     },
 
     async getAll() {
-        return await Thread.findAll();
+        return await Thread.findAll({
+            include: {
+                model: Comment, 
+                as: 'comments'
+            }
+        });
     },
 
     async getOneById(num) {
@@ -16,7 +21,8 @@ module.exports = {
                 id: num
             },
             include: {
-                model: Comment, as: 'comments'
+                model: Comment, 
+                as: 'comments'
             }
         });
     },
@@ -25,6 +31,10 @@ module.exports = {
         return await Thread.findAll({
             where: {
                 movie_name: str
+            },
+            include: {
+                model: Comment, 
+                as: 'comments'
             }
         });
     },

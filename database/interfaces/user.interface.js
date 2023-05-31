@@ -14,7 +14,7 @@ module.exports = {
         });
     },
 
-    async getOne(num) {
+    async getOneById(num) {
         return await User.findOne({
             where: {
                 id: num

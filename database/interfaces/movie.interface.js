@@ -23,18 +23,8 @@ module.exports = {
     async getAll() {
         return await Movie.findAll({
             include: {
-                model: Genre, as: 'genres'
-            }
-        });
-    },
-
-    async getAllByGenre(num) {
-        return await Movie.findAll({
-            include: {
-                model: Genre,
-                where: {
-                    id: num
-                }
+                model: Genre, 
+                as: 'genres'
             }
         });
     },
@@ -43,6 +33,22 @@ module.exports = {
         return await Movie.findOne({
             where: {
                 name: str
+            },
+            include: {
+                model: Genre, 
+                as: 'genres'
+            }
+        });
+    },
+
+    async getAllByGenre(num) {
+        return await Movie.findAll({
+            include: {
+                model: Genre,
+                as: 'genres',
+                where: {
+                    id: num
+                }
             }
         });
     },

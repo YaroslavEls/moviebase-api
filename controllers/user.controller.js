@@ -7,7 +7,7 @@ const getAllUsers = async (req, reply) => {
 
 const getOneUser = async (req, reply) => {
     const id = parseInt(req.params['id']);
-    const data = await UserInterface.getOne(id);
+    const data = await UserInterface.getOneById(id);
     reply.code(200).send(data);
 };
 

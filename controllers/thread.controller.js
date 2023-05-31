@@ -52,7 +52,7 @@ const deleteThread = async (req, reply) => {
     }
 
     await ThreadInterface.delete(id);
-    reply.code(200).send({ message: `thread ${id} has been deleted` });
+    reply.code(204).send({ message: `thread ${id} has been deleted` });
 };
 
 module.exports = {

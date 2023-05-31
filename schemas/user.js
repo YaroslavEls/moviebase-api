@@ -1,6 +1,15 @@
 const UserController = require('../controllers/user.controller.js');
 const AuthController = require('../controllers/auth.controller.js');
 
+const Follow = {
+    type: 'object',
+    properties: {
+        id: { type: 'integer' },
+        name: { type: 'string' },
+        email: { type: 'string' }
+    }
+};
+
 const User = {
     type: 'object',
     properties: {
@@ -11,25 +20,11 @@ const User = {
         role: { type: 'string' },
         followers: {
             type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: { type: 'integer' },
-                    name: { type: 'string' },
-                    email: { type: 'string' }
-                }
-            }
+            items: Follow
         },
         followings: {
             type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: { type: 'integer' },
-                    name: { type: 'string' },
-                    email: { type: 'string' }
-                }
-            }
+            items: Follow
         }
     }
 };
