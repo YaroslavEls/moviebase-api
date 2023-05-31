@@ -1,4 +1,4 @@
-const GenreInterface = require('../database/interfaces/genre.interface');
+const GenreInterface = require('../database/interfaces/genre.interface.js');
 
 const getAllGenres = async (req, reply) => {
     const data = await GenreInterface.getAll();
@@ -36,7 +36,7 @@ const deleteGenre = async (req, reply) => {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
-    const id = req.params['id'];
+    const id = parseInt(req.params['id']);
     await GenreInterface.delete(id);
     reply.code(204).send({ message: `genre ${id} has been deleted` });
 };

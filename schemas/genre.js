@@ -1,4 +1,4 @@
-const GenreController = require('../controllers/genre.controller');
+const GenreController = require('../controllers/genre.controller.js');
 
 const Genre = {
     type: 'object',

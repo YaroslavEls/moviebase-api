@@ -1,4 +1,4 @@
-const ThreadInterface = require('../database/interfaces/thread.interface');
+const ThreadInterface = require('../database/interfaces/thread.interface.js');
 
 const getAllThreads = async (req, reply) => {
     const data = await ThreadInterface.getAll();
@@ -6,7 +6,7 @@ const getAllThreads = async (req, reply) => {
 };
 
 const getOneThread = async (req, reply) => {
-    const id = req.params['id'];
+    const id = parseInt(req.params['id']);
     const data = await ThreadInterface.getOneById(id);
     reply.code(200).send(data);
 };
@@ -19,10 +19,12 @@ const postThread = async (req, reply) => {
         return reply.send(err);
     }
 
-    const body = req.body;
-    body['user_id'] = token['user_id'];
-    body['movie_name'] = req.params['name'];
-    const data = await ThreadInterface.create(body);
+    const { title, text, is_review } = req.body;
+    const user_id = token['user_id'];
+    const movie_name = req.params['name'];
+
+    const params = { title, text, is_review, user_id, movie_name };
+    const data = await ThreadInterface.create(params);
     reply.code(201).send(data);
 };
 
@@ -33,7 +35,7 @@ const getThreadsByMovie = async (req, reply) => {
 };
 
 const deleteThread = async (req, reply) => {
-    const id = req.params['id'];
+    const id = parseInt(req.params['id']);
     const thread = await ThreadInterface.getOneById(id);
     const requiredRole = 'admin';
     let token;

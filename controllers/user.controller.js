@@ -1,4 +1,4 @@
-const UserInterface = require('../database/interfaces/user.interface');
+const UserInterface = require('../database/interfaces/user.interface.js');
 
 const getAllUsers = async (req, reply) => {
     const data = await UserInterface.getAll();
@@ -6,7 +6,7 @@ const getAllUsers = async (req, reply) => {
 };
 
 const getOneUser = async (req, reply) => {
-    const id = req.params['id'];
+    const id = parseInt(req.params['id']);
     const data = await UserInterface.getOne(id);
     reply.code(200).send(data);
 };
@@ -20,7 +20,7 @@ const postUserFollow = async (req, reply) => {
     }
 
     const user1_id = token['user_id'];
-    const user2_id = req.params['id'];
+    const user2_id = parseInt(req.params['id']);
 
     const data = await UserInterface.postFollow(user1_id, user2_id);
 
@@ -36,7 +36,7 @@ const deleteUserFollow = async (req, reply) => {
     }
 
     const user1_id = token['user_id'];
-    const user2_id = req.params['id'];
+    const user2_id = parseInt(req.params['id']);
 
     const data = await UserInterface.deleteFollow(user1_id, user2_id);
 

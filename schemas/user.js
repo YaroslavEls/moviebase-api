@@ -1,5 +1,5 @@
-const UserController = require('../controllers/user.controller');
-const AuthController = require('../controllers/auth.controller');
+const UserController = require('../controllers/user.controller.js');
+const AuthController = require('../controllers/auth.controller.js');
 
 const User = {
     type: 'object',

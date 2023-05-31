@@ -1,9 +1,8 @@
-const bcrypt = require('bcryptjs');
-const UserInterface = require('../database/interfaces/user.interface');
+const crypto = require('node:crypto');
+const UserInterface = require('../database/interfaces/user.interface.js');
 
 const login = async (req, reply) => {
-    const name = req.body['name'];
-    const password = req.body['password'];
+    const { name, password } = req.body;
 
     const user = await UserInterface.getOneByName(name);
 
@@ -11,8 +10,11 @@ const login = async (req, reply) => {
         reply.code(400).send({ message: 'Invalid username' });
     }
 
-    const passCheck = bcrypt.compareSync(password, user.password);
-    if (!passCheck) {
+    const buffer = Buffer.from(user.password, 'utf8');
+    const salt = user.password.split(":")[0];
+    const hash = salt + ':' + crypto.scryptSync(password, salt, 64).toString('base64');
+
+    if (!crypto.timingSafeEqual(buffer, Buffer.from(hash, 'utf8'))) {
         reply.code(400).send({ message: 'Invalid password' });
     }
 
@@ -26,13 +28,13 @@ const login = async (req, reply) => {
 };
 
 const registration = async (req, reply) => {
-    const body = req.body;
+    const { email, name, password } = req.body;
+    
+    const salt = crypto.randomBytes(16).toString('base64');
+    const hash = salt + ':' + crypto.scryptSync(password, salt, 64).toString('base64');
 
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(body['password'], salt);
-    body['password'] = hash;
-
-    const data = await UserInterface.create(body);
+    const params = { email, name, 'password': hash };
+    const data = await UserInterface.create(params);
     reply.code(201).send(data);
 };
 

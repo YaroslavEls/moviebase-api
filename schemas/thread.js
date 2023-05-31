@@ -1,4 +1,4 @@
-const ThreadController = require('../controllers/thread.controller');
+const ThreadController = require('../controllers/thread.controller.js');
 
 const Thread = {
     type: 'object',

@@ -1,4 +1,4 @@
-const CommentInterface = require('../database/interfaces/comment.interface');
+const CommentInterface = require('../database/interfaces/comment.interface.js');
 
 const postComment = async (req, reply) => {
     let token;
@@ -8,15 +8,17 @@ const postComment = async (req, reply) => {
         return reply.send(err);
     }
 
-    const body = req.body;
-    body['user_id'] = token['user_id'];
-    body['thread_id'] = +req.params['id'];
-    const data = await CommentInterface.create(body);
+    const { text } = req.body;
+    const user_id = token['user_id'];
+    const thread_id = parseInt(req.params['id']);
+
+    const params = { text, user_id, thread_id };
+    const data = await CommentInterface.create(params);
     reply.code(201).send(data);
 };
 
 const deleteComment = async (req, reply) => {
-    const id = req.params['id'];
+    const id = parseInt(req.params['id']);
     const comment = await CommentInterface.getOneById(id);
     const requiredRole = 'admin';
     let token;

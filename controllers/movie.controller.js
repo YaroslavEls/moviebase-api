@@ -1,4 +1,4 @@
-const MovieInterface = require('../database/interfaces/movie.interface');
+const MovieInterface = require('../database/interfaces/movie.interface.js');
 
 const getAllMovies = async (req, reply) => {
     const data = await MovieInterface.getAll();
@@ -42,7 +42,7 @@ const deleteMovie = async (req, reply) => {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
-    const id = req.params['id'];
+    const id = parseInt(req.params['id']);
     await MovieInterface.delete(id);
     reply.code(204).send({ message: `item ${id} has been deleted` });
 };
@@ -60,14 +60,14 @@ const updateMovie = async (req, reply) => {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
-    const id = req.params['id'];
+    const id = parseInt(req.params['id']);
     const body = req.body;
     await MovieInterface.update(id, body);
     reply.code(200).send({ message: `item ${id} has been updated` });
 };
 
 const getMoviesByGenre = async (req, reply) => {
-    const id = req.params['id'];
+    const id = parseInt(req.params['id']);
     const data = await MovieInterface.getAllByGenre(id);
     reply.code(200).send(data);
 };

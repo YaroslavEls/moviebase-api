@@ -1,5 +1,5 @@
-const Movie = require('../models/movie.model');
-const Genre = require('../models/genre.model');
+const Movie = require('../models/movie.model.js');
+const Genre = require('../models/genre.model.js');
 
 module.exports = {
     async create(data) {

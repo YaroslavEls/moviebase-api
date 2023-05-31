@@ -1,8 +1,8 @@
-const Movie = require('./models/movie.model');
-const Genre = require('./models/genre.model');
-const Thread = require('./models/thread.model');
-const Comment = require('./models/comment.model');
-const User = require('./models/user.model');
+const Movie = require('./models/movie.model.js');
+const Genre = require('./models/genre.model.js');
+const Thread = require('./models/thread.model.js');
+const Comment = require('./models/comment.model.js');
+const User = require('./models/user.model.js');
 
 const associate = () => {
     Movie.belongsToMany(Genre, {

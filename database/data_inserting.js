@@ -1,8 +1,8 @@
-const MovieInterface = require('./interfaces/movie.interface');
-const GenreInterface = require('./interfaces/genre.interface');
-const UserInterface = require('./interfaces/user.interface');
-const ThreadInterface = require('./interfaces/thread.interface');
-const CommentInterface = require('./interfaces/comment.interface');
+const MovieInterface = require('./interfaces/movie.interface.js');
+const GenreInterface = require('./interfaces/genre.interface.js');
+const UserInterface = require('./interfaces/user.interface.js');
+const ThreadInterface = require('./interfaces/thread.interface.js');
+const CommentInterface = require('./interfaces/comment.interface.js');
 
 const data_inserting = async () => {
     await GenreInterface.create({

@@ -1,4 +1,4 @@
-const MovieController = require('../controllers/movie.controller');
+const MovieController = require('../controllers/movie.controller.js');
 
 const Movie = {
     type: 'object',

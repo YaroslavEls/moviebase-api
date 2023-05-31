@@ -1,8 +1,8 @@
-const movieSchemas = require('../schemas/movie');
-const genreSchemas = require('../schemas/genre');
-const threadSchemas = require('../schemas/thread');
-const commentSchemas = require('../schemas/comment');
-const userSchema = require('../schemas/user');
+const movieSchemas = require('../schemas/movie.js');
+const genreSchemas = require('../schemas/genre.js');
+const threadSchemas = require('../schemas/thread.js');
+const commentSchemas = require('../schemas/comment.js');
+const userSchema = require('../schemas/user.js');
 
 function Routes(app, options, done) {
     app.post('/registration', userSchema.registerUserSchema);

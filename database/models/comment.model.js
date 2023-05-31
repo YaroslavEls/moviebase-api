@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const seq = require('../connection');
+const seq = require('../connection.js');
 
 const Comment = seq.define('comment', {
     id: {

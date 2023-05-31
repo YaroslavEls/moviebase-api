@@ -1,4 +1,4 @@
-const CommentController = require('../controllers/comment.controller');
+const CommentController = require('../controllers/comment.controller.js');
 
 const Comment = {
     type: 'object',
