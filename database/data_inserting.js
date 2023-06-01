@@ -4,6 +4,7 @@ const UserInterface = require('./interfaces/user.interface.js');
 const ThreadInterface = require('./interfaces/thread.interface.js');
 const CommentInterface = require('./interfaces/comment.interface.js');
 const CompilationInterface = require('./interfaces/comp.interface.js');
+const RatingInterface = require('./interfaces/rating.interface.js');
 
 const data_inserting = async () => {
     await GenreInterface.create({
@@ -124,6 +125,8 @@ const data_inserting = async () => {
         user_id: 2,
     });
     await CompilationInterface.addMovie(1, 1);
+
+    await RatingInterface.create({movie_id: 1, user_id: 1, score: 5});
 };
 
 module.exports = data_inserting;

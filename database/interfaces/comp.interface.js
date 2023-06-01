@@ -53,7 +53,7 @@ module.exports = {
     },
 
     async addMovie(num1, num2) {
-        const comp = await Compilation.findOne(num1);
+        const comp = await Compilation.findByPk(num1);
         await comp.addMovie(num2);
         return comp;
     },

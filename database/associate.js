@@ -3,7 +3,8 @@ const Genre = require('./models/genre.model.js');
 const Thread = require('./models/thread.model.js');
 const Comment = require('./models/comment.model.js');
 const User = require('./models/user.model.js');
-const Compilation = require('./models/comp.model');
+const Compilation = require('./models/comp.model.js');
+const Rating = require('./models/rating.model.js');
 
 const associate = () => {
     Movie.belongsToMany(Genre, {
@@ -31,6 +32,15 @@ const associate = () => {
     Compilation.belongsToMany(Movie, {
         through: 'movie_comp',
         foreignKey: 'comp_id'
+    });
+
+    Movie.hasMany(Rating, {
+        foreignKey: 'movie_id',
+        sourceKey: 'id'
+    });
+    Rating.belongsTo(Movie, {
+        foreignKey: 'movie_id',
+        sourceKey: 'id'
     });
 
     Thread.hasMany(Comment, {
@@ -76,6 +86,15 @@ const associate = () => {
         sourceKey: 'id'
     });
     Compilation.belongsTo(User, {
+        foreignKey: 'user_id',
+        sourceKey: 'id'
+    });
+
+    User.hasMany(Rating, {
+        foreignKey: 'user_id',
+        sourceKey: 'id'
+    });
+    Rating.belongsTo(User, {
         foreignKey: 'user_id',
         sourceKey: 'id'
     });

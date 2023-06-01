@@ -5,6 +5,7 @@ const threadSchemas = require('../schemas/thread.js');
 const commentSchemas = require('../schemas/comment.js');
 const userSchema = require('../schemas/user.js');
 const compSchemas = require('../schemas/comp.js');
+const ratingSchemas = require('../schemas/rating.js');
 
 module.exports = {
     swagger: {
@@ -21,7 +22,8 @@ module.exports = {
                 { name: 'users', description: 'Users related end-points' },
                 { name: 'threads', description: 'Threads related end-points' },
                 { name: 'comments', description: 'Comment related end-points' },
-                { name: 'compilations', description: 'Compilation related end-points' }
+                { name: 'compilations', description: 'Compilation related end-points' },
+                { name: 'ratings', description: 'Rating related end-points' }
             ],
             definitions: {
                 Movie: movieSchemas.Movie,
@@ -29,7 +31,8 @@ module.exports = {
                 User: userSchema.User,
                 Thread: threadSchemas.Thread,
                 Comment: commentSchemas.Comment,
-                Compilation: compSchemas.Compilation
+                Compilation: compSchemas.Compilation,
+                Rating: ratingSchemas.Rating
             }
         }
     },

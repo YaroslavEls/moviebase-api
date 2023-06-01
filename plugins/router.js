@@ -4,6 +4,7 @@ const threadSchemas = require('../schemas/thread.js');
 const commentSchemas = require('../schemas/comment.js');
 const userSchema = require('../schemas/user.js');
 const compSchema = require('../schemas/comp.js');
+const ratingSchema = require('../schemas/rating.js');
 
 function Routes(app, options, done) {
     app.post('/registration', userSchema.registerUserSchema);
@@ -40,6 +41,11 @@ function Routes(app, options, done) {
     app.put('/compilations/:id', compSchema.updateCompSchema);
     app.post('/compilations/:comp_id/:movie_id', compSchema.addMovieCompSchema);
     app.delete('/compilations/:comp_id/:movie_id', compSchema.removeMovieCompSchema);
+
+    app.get('/rate', ratingSchema.getAllRatingsSchema);
+    app.post('/rate/:id', ratingSchema.postRatingSchema);
+    app.delete('/rate/:id', ratingSchema.deleteRatingSchema);
+    app.get('/users/:id/ratings', ratingSchema.getRatingsByUserSchema);
 
     done();
 }
