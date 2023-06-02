@@ -4,3 +4,4 @@ test.http
 test/
 *.db
 what-to-add.txt
+.nyc_output

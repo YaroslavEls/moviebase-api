@@ -5,6 +5,7 @@ const ThreadInterface = require('./interfaces/thread.interface.js');
 const CommentInterface = require('./interfaces/comment.interface.js');
 const CompilationInterface = require('./interfaces/comp.interface.js');
 const RatingInterface = require('./interfaces/rating.interface.js');
+const crypto = require('node:crypto');
 
 const data_inserting = async () => {
     await GenreInterface.create({
@@ -42,6 +43,9 @@ const data_inserting = async () => {
         genres: [1, 2]
     });
 
+    const salt = crypto.randomBytes(16).toString('base64');
+    const hash = salt + ':' + crypto.scryptSync('zxc000', salt, 64).toString('base64');
+
     await UserInterface.create({
         email: 'qweqwe@gmail.com',
         name: 'John',
@@ -55,7 +59,7 @@ const data_inserting = async () => {
     await UserInterface.create({
         email: 'zxczxc@gmail.com',
         name: 'Marcus',
-        password: 'zxc000',
+        password: hash,
         role: 'admin'
     });
 
