@@ -39,7 +39,6 @@ module.exports = {
                 200: Movie
             }
         },
-        preHandler: AuthController.checkAuth,
         handler: MovieController.getOneMovie
     },
 
@@ -72,6 +71,7 @@ module.exports = {
                 201: Movie
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: MovieController.postMovie
     },
 
@@ -87,6 +87,7 @@ module.exports = {
                 }
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: MovieController.deleteMovie
     },
 
@@ -110,6 +111,7 @@ module.exports = {
                 }
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: MovieController.updateMovie
     }
 };

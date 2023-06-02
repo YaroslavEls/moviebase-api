@@ -1,12 +1,11 @@
-const { test } = require('tap');
+const tap = require('tap');
 const build = require('../index.js');
 
-test('tests: ', async t => {
-    t.plan(3)
+tap.test('tests2: ', async t => {
+    t.plan(3);
     const app = await build(false);
-    t.teardown(() => app.close())
+    t.teardown(async () => await app.close());
 
-    
     const login = await app.inject({
         method: 'POST',
         url: '/login',
@@ -15,46 +14,47 @@ test('tests: ', async t => {
             password: 'zxc000'
         }
     });
-
     const token = login.json().token;
 
-
-    t.test('GET /movies test', async t => {
+    t.test('GET /genres test', async t => {
         const res = await app.inject({
             method: 'GET',
-            url: '/movies'
+            url: '/genres'
         });
 
         t.equal(res.statusCode, 200);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        // t.same(res.json(), { hello: 'world' })
+        t.same(Object.keys(res.json()[0]), ['id', 'name']);
     });
 
-    t.test('GET /movies/:name test', async t => {
-        const res = await app.inject({
-            method: 'GET',
-            url: '/movies/Fargo'
-        });
-        
-        t.equal(res.statusCode, 200);
-        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-    });
-
-    t.test('POST /movies test', async t => {
+    t.test('POST /genres test', async t => {
         const res = await app.inject({
             method: 'POST',
-            url: '/movies',
+            url: '/genres',
             headers: {
                 'Authorization': 'Bearer ' + token
             },
-            body: {
-                name: 'qwe', 
-                description: 'sad', 
-                year: 2001
+            payload: {
+                name: 'qwe'
             }
         });
 
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['name']);
+    });
+
+    t.test('DELETE /genres/:id test', async t => {
+        const res = await app.inject({
+            method: 'DELETE',
+            url: '/genres/1',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        t.equal(res.statusCode, 204);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['message']);
     });
 });
