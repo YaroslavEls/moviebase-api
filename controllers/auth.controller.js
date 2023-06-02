@@ -38,7 +38,16 @@ const registration = async (req, reply) => {
     reply.code(201).send(data);
 };
 
+const checkAuth = async (req, reply) => {
+    try {
+        await req.jwtVerify();
+    } catch (err) {
+        return reply.send(err);
+    }
+};
+
 module.exports = {
     login,
-    registration
+    registration,
+    checkAuth
 };

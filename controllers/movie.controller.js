@@ -11,16 +11,15 @@ const getOneMovie = async (req, reply) => {
     reply.code(200).send(data);
 };
 
-const postMovie = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
+const getMoviesByGenre = async (req, reply) => {
+    const id = parseInt(req.params['id']);
+    const data = await MovieInterface.getAllByGenre(id);
+    reply.code(200).send(data);
+};
 
+const postMovie = async (req, reply) => {
     const requiredRole = 'admin';
-    if (token['role'] !== requiredRole) {
+    if (req.user['role'] !== requiredRole) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -30,15 +29,8 @@ const postMovie = async (req, reply) => {
 };
 
 const deleteMovie = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const requiredRole = 'admin';
-    if (token['role'] !== requiredRole) {
+    if (req.user['role'] !== requiredRole) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -48,15 +40,8 @@ const deleteMovie = async (req, reply) => {
 };
 
 const updateMovie = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const requiredRole = 'admin';
-    if (token['role'] !== requiredRole) {
+    if (req.user['role'] !== requiredRole) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -66,17 +51,11 @@ const updateMovie = async (req, reply) => {
     reply.code(200).send({ message: `item ${id} has been updated` });
 };
 
-const getMoviesByGenre = async (req, reply) => {
-    const id = parseInt(req.params['id']);
-    const data = await MovieInterface.getAllByGenre(id);
-    reply.code(200).send(data);
-};
-
 module.exports = {
     getAllMovies,
     getOneMovie,
+    getMoviesByGenre,
     postMovie,
     deleteMovie,
-    updateMovie,
-    getMoviesByGenre
+    updateMovie
 };

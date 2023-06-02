@@ -1,3 +1,4 @@
+const AuthController = require('../controllers/auth.controller.js');
 const GenreController = require('../controllers/genre.controller.js');
 
 const Genre = {
@@ -38,6 +39,7 @@ module.exports = {
                 201: Genre
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: GenreController.postGenre
     },
 
@@ -53,6 +55,7 @@ module.exports = {
                 }
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: GenreController.deleteGenre
     }
 };

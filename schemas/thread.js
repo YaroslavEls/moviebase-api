@@ -1,3 +1,4 @@
+const AuthController = require('../controllers/auth.controller.js');
 const ThreadController = require('../controllers/thread.controller.js');
 const { Comment } = require('./comment.js')
 
@@ -71,6 +72,7 @@ module.exports = {
                 201: Thread
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: ThreadController.postThread
     },
 
@@ -86,6 +88,7 @@ module.exports = {
                 }
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: ThreadController.deleteThread
     }
 };

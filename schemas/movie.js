@@ -1,3 +1,4 @@
+const AuthController = require('../controllers/auth.controller.js');
 const MovieController = require('../controllers/movie.controller.js');
 const { Genre } = require('./genre.js')
 
@@ -38,6 +39,7 @@ module.exports = {
                 200: Movie
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: MovieController.getOneMovie
     },
 

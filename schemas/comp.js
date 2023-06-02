@@ -1,3 +1,4 @@
+const AuthController = require('../controllers/auth.controller.js');
 const CompController = require('../controllers/comp.controller.js');
 const { Movie } = require('./movie.js')
 
@@ -55,6 +56,7 @@ module.exports = {
                 201: Compilation
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: CompController.postComp
     },
 
@@ -76,6 +78,7 @@ module.exports = {
                 }
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: CompController.deleteComp
     },
 
@@ -98,6 +101,7 @@ module.exports = {
                 }
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: CompController.updateComp
     },
 
@@ -108,6 +112,7 @@ module.exports = {
                 200: Compilation
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: CompController.addMovieComp
     },
 
@@ -118,6 +123,7 @@ module.exports = {
                 200: Compilation
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: CompController.removeMovieComp
     }
 };

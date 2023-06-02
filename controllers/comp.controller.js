@@ -12,34 +12,19 @@ const getOneComp = async (req, reply) => {
 };
 
 const postComp = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const { title, desc } = req.body;
-    const user_id = token['user_id'];
+    const user_id = req.user['user_id'];
 
     const params = { title, desc, user_id };
-    console.log(params)
     const data = await CompInterface.create(params);
     reply.code(201).send(data);
 };
 
 const deleteComp = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const id = parseInt(req.params['id']);
     const owner = await CompInterface.getOwner(id);
 
-    if (owner.user_id != token['user_id']) {
+    if (owner.user_id != req.user['user_id']) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -48,17 +33,10 @@ const deleteComp = async (req, reply) => {
 };
 
 const updateComp = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const id = parseInt(req.params['id']);
     const owner = await CompInterface.getOwner(id);
 
-    if (owner.user_id != token['user_id']) {
+    if (owner.user_id != req.user['user_id']) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -68,17 +46,10 @@ const updateComp = async (req, reply) => {
 };
 
 const addMovieComp = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const id = parseInt(req.params['comp_id']);
     const owner = await CompInterface.getOwner(id);
 
-    if (owner.user_id != token['user_id']) {
+    if (owner.user_id != req.user['user_id']) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -89,17 +60,10 @@ const addMovieComp = async (req, reply) => {
 };
 
 const removeMovieComp = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const id = parseInt(req.params['comp_id']);
     const owner = await CompInterface.getOwner(id);
 
-    if (owner.user_id != token['user_id']) {
+    if (owner.user_id != req.user['user_id']) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 

@@ -12,15 +12,8 @@ const getOneThread = async (req, reply) => {
 };
 
 const postThread = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const { title, text, is_review } = req.body;
-    const user_id = token['user_id'];
+    const user_id = req.user['user_id'];
     const movie_name = req.params['name'];
 
     const params = { title, text, is_review, user_id, movie_name };
@@ -38,15 +31,9 @@ const deleteThread = async (req, reply) => {
     const id = parseInt(req.params['id']);
     const thread = await ThreadInterface.getOneById(id);
     const requiredRole = 'admin';
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
 
-    const cond1 = (token['user_id'] === thread.user_id);
-    const cond2 = (token['role'] === requiredRole);
+    const cond1 = (req.user['user_id'] === thread.user_id);
+    const cond2 = (req.user['role'] === requiredRole);
     if (!cond1 && !cond2) {
         return reply.code(403).send({ message: 'Permission denied' });
     }

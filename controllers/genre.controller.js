@@ -6,15 +6,8 @@ const getAllGenres = async (req, reply) => {
 };
 
 const postGenre = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const requiredRole = 'admin';
-    if (token['role'] !== requiredRole) {
+    if (req.user['role'] !== requiredRole) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -24,15 +17,8 @@ const postGenre = async (req, reply) => {
 };
 
 const deleteGenre = async (req, reply) => {
-    let token;
-    try {
-        token = await req.jwtVerify();
-    } catch (err) {
-        return reply.send(err);
-    }
-
     const requiredRole = 'admin';
-    if (token['role'] !== requiredRole) {
+    if (req.user['role'] !== requiredRole) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 

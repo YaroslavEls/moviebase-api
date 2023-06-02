@@ -1,5 +1,5 @@
-const UserController = require('../controllers/user.controller.js');
 const AuthController = require('../controllers/auth.controller.js');
+const UserController = require('../controllers/user.controller.js');
 const { Compilation } = require('./comp.js');
 
 const Follow = {
@@ -67,6 +67,7 @@ module.exports = {
                 200: User
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: UserController.postUserFollow
     },
 
@@ -77,6 +78,7 @@ module.exports = {
                 200: User
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: UserController.deleteUserFollow
     },
 

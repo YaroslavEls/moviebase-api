@@ -1,3 +1,4 @@
+const AuthController = require('../controllers/auth.controller.js');
 const CommentController = require('../controllers/comment.controller.js');
 
 const Comment = {
@@ -29,6 +30,7 @@ module.exports = {
                 201: Comment
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: CommentController.postComment
     },
 
@@ -44,6 +46,7 @@ module.exports = {
                 }
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: CommentController.deleteComment
     }
 };

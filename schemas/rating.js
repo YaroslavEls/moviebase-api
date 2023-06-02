@@ -1,3 +1,4 @@
+const AuthController = require('../controllers/auth.controller.js');
 const RatingController = require('../controllers/rating.controller.js');
 const { Movie } = require('./movie.js');
 
@@ -58,6 +59,7 @@ module.exports = {
                 201: Rating
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: RatingController.postRating
     },
 
@@ -73,6 +75,7 @@ module.exports = {
                 }
             }
         },
+        preHandler: AuthController.checkAuth,
         handler: RatingController.deleteRating
     }
 };
