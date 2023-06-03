@@ -93,12 +93,7 @@ module.exports = {
                 }
             },
             response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string' }
-                    }
-                }
+                201: Compilation
             }
         },
         preHandler: AuthController.checkAuth,
@@ -109,7 +104,7 @@ module.exports = {
         schema: {
             tags: ['compilations'],
             response: {
-                200: Compilation
+                201: Compilation
             }
         },
         preHandler: AuthController.checkAuth,
@@ -120,7 +115,7 @@ module.exports = {
         schema: {
             tags: ['compilations'],
             response: {
-                200: Compilation
+                204: Compilation
             }
         },
         preHandler: AuthController.checkAuth,

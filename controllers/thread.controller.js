@@ -42,10 +42,37 @@ const deleteThread = async (req, reply) => {
     reply.code(204).send({ message: `thread ${id} has been deleted` });
 };
 
+const postThreadComment = async (req, reply) => {
+    const { text } = req.body;
+    const user_id = req.user['user_id'];
+    const thread_id = parseInt(req.params['id']);
+
+    const params = { text, user_id, thread_id };
+    const data = await ThreadInterface.postComment(params);
+    reply.code(201).send(data);
+};
+
+const deleteThreadComment = async (req, reply) => {
+    const id = parseInt(req.params['id']);
+    const comment = await ThreadInterface.getCommentById(id);
+    const requiredRole = 'admin';
+
+    const cond1 = (req.user['user_id'] === comment.user_id);
+    const cond2 = (req.user['role'] === requiredRole);
+    if (!cond1 && !cond2) {
+        return reply.code(403).send({ message: 'Permission denied' });
+    }
+
+    const data = await ThreadInterface.deleteComment(id);
+    reply.code(204).send(data);
+};
+
 module.exports = {
     getAllThreads,
     getOneThread,
     postThread,
     getThreadsByMovie,
-    deleteThread
+    deleteThread,
+    postThreadComment,
+    deleteThreadComment
 };

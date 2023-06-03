@@ -1,6 +1,13 @@
 const AuthController = require('../controllers/auth.controller.js');
 const MovieController = require('../controllers/movie.controller.js');
-const { Genre } = require('./genre.js')
+
+const Genre = {
+    type: 'object',
+    properties: {
+        id: { type: 'integer' },
+        name: { type: 'string' }
+    }
+};
 
 const Movie = {
     type: 'object',
@@ -42,19 +49,6 @@ module.exports = {
         handler: MovieController.getOneMovie
     },
 
-    getMoviesByGenreSchema: {
-        schema: {
-            tags: ['movies'],
-            response: {
-                200: {
-                    type: 'array',
-                    items: Movie
-                }
-            }
-        },
-        handler: MovieController.getMoviesByGenre
-    },
-
     postMovieSchema: {
         schema: {
             tags: ['movies'],
@@ -71,7 +65,7 @@ module.exports = {
                 201: Movie
             }
         },
-        preHandler: AuthController.checkAuth,
+        preHandler: AuthController.checkPermission,
         handler: MovieController.postMovie
     },
 
@@ -87,7 +81,7 @@ module.exports = {
                 }
             }
         },
-        preHandler: AuthController.checkAuth,
+        preHandler: AuthController.checkPermission,
         handler: MovieController.deleteMovie
     },
 
@@ -103,15 +97,43 @@ module.exports = {
                 }
             },
             response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        message: { type: 'string' }
+                201: Movie
+            }
+        },
+        preHandler: AuthController.checkPermission,
+        handler: MovieController.updateMovie
+    },
+
+    postMovieRatingSchema: {
+        schema: {
+            tags: ['movies'],
+            body: {
+                type: 'object',
+                required: ['score'],
+                properties: {
+                    score: { 
+                        type: 'integer',
+                        minimum: 1,
+                        maximum: 10
                     }
                 }
+            },
+            response: {
+                201: Movie
             }
         },
         preHandler: AuthController.checkAuth,
-        handler: MovieController.updateMovie
+        handler: MovieController.postMovieRating
+    },
+
+    deleteMovieRatingSchema: {
+        schema: {
+            tags: ['movies'],
+            response: {
+                201: Movie
+            }
+        },
+        preHandler: AuthController.checkAuth,
+        handler: MovieController.deleteMovieRating
     }
 };

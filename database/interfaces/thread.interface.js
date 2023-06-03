@@ -40,9 +40,41 @@ module.exports = {
     },
 
     async delete(num) {
-        return await Thread.destroy({
+        await Thread.destroy({
             where: {
                 id: num
+            }
+        });
+
+        return;
+    },
+
+    async postComment(data) {
+        await Comment.create(data);
+
+        return Thread.findByPk(data['thread_id'], {
+            include: {
+                model: Comment,
+                as: 'comments'
+            }
+        });
+    },
+
+    async getCommentById(num) {
+        return await Comment.findByPk(num);
+    },
+
+    async deleteComment(num) {
+        await Comment.destroy({
+            where: {
+                id: num
+            }
+        });
+
+        return Thread.findByPk(num, {
+            include: {
+                model: Comment,
+                as: 'comments'
             }
         });
     }

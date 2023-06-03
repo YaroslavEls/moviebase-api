@@ -16,10 +16,7 @@ module.exports = {
     },
 
     async getOneById(num) {
-        return await Compilation.findOne({
-            where: {
-                id: num
-            },
+        return await Compilation.findByPk(num, {
             include: {
                 model: Movie,
                 as: 'movies'
@@ -37,17 +34,26 @@ module.exports = {
     },
 
     async delete(num) {
-        return await Compilation.destroy({
+        await Compilation.destroy({
             where: {
                 id: num
             }
         });
+
+        return;
     },
 
     async update(num, data) {
-        return await Compilation.update(data, {
+        await Compilation.update(data, {
             where: {
                 id: num
+            }
+        });
+
+        return await Compilation.findByPk(num, {
+            include: {
+                model: Movie,
+                as: 'movies'
             }
         });
     },
@@ -55,12 +61,24 @@ module.exports = {
     async addMovie(num1, num2) {
         const comp = await Compilation.findByPk(num1);
         await comp.addMovie(num2);
-        return comp;
+        
+        return await Compilation.findByPk(num1, {
+            include: {
+                model: Movie,
+                as: 'movies'
+            }
+        });
     },
 
     async removeMovie(num1, num2) {
         const comp = await Compilation.findByPk(num1);
         await comp.removeMovie(num2);
-        return comp;
+        
+        return await Compilation.findByPk(num1, {
+            include: {
+                model: Movie,
+                as: 'movies'
+            }
+        });
     }
 };

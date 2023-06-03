@@ -1,5 +1,6 @@
 const Movie = require('../models/movie.model.js');
 const Genre = require('../models/genre.model.js');
+const Rating = require('../models/rating.model.js');
 
 module.exports = {
     async create(data) {
@@ -17,7 +18,15 @@ module.exports = {
             }
         }
 
-        return movie;
+        return await Movie.findOne({
+            where: {
+                name: data['name']
+            },
+            include: {
+                model: Genre,
+                as: 'genres'
+            }
+        });
     },
 
     async getAll() {
@@ -41,30 +50,65 @@ module.exports = {
         });
     },
 
-    async getAllByGenre(num) {
-        return await Movie.findAll({
-            include: {
-                model: Genre,
-                as: 'genres',
-                where: {
-                    id: num
-                }
-            }
-        });
-    },
-
     async delete(num) {
-        return await Movie.destroy({
+        await Movie.destroy({
             where: {
                 id: num
             }
         });
+
+        return;
     },
 
     async update(num, data) {
-        return await Movie.update(data, {
+        await Movie.update(data, {
             where: {
                 id: num
+            }
+        });
+
+        return await Movie.findByPk(num, {
+            include: {
+                model: Genre,
+                as: 'genres'
+            }
+        });
+    },
+
+    async postRating(data) {
+        const rating = await Rating.findOne({
+            where: {
+                movie_id: data['movie_id'],
+                user_id: data['user_id']
+            }
+        });
+
+        if (!rating) {
+            await Rating.create(data);
+        } else {
+            await rating.update(data);
+        }
+
+        return await Movie.findByPk(data['movie_id'], {
+            include: {
+                model: Genre,
+                as: 'genres'
+            }
+        });
+    },
+
+    async deleteRating(num1, num2) {
+        await Rating.destroy({
+            where: {
+                user_id: num1,
+                movie_id: num2
+            }
+        });
+
+        return await Movie.findByPk(num2, {
+            include: {
+                model: Genre,
+                as: 'genres'
             }
         });
     }

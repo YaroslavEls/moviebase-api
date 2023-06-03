@@ -41,8 +41,8 @@ const updateComp = async (req, reply) => {
     }
 
     const body = req.body;
-    await CompInterface.update(id, body);
-    reply.code(204).send({ message: `item ${id} has been updated` });
+    const data = await CompInterface.update(id, body);
+    reply.code(204).send(data);
 };
 
 const addMovieComp = async (req, reply) => {
@@ -56,7 +56,7 @@ const addMovieComp = async (req, reply) => {
     const comp_id = parseInt(req.params['comp_id']);
     const movie_id = parseInt(req.params['movie_id']);
     const data = await CompInterface.addMovie(comp_id, movie_id);
-    reply.code(200).send(data);
+    reply.code(201).send(data);
 };
 
 const removeMovieComp = async (req, reply) => {
@@ -70,7 +70,7 @@ const removeMovieComp = async (req, reply) => {
     const comp_id = parseInt(req.params['comp_id']);
     const movie_id = parseInt(req.params['movie_id']);
     const data = await CompInterface.removeMovie(comp_id, movie_id);
-    reply.code(200).send(data);
+    reply.code(204).send(data);
 };
 
 module.exports = {

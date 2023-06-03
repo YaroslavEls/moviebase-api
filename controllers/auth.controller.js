@@ -46,8 +46,22 @@ const checkAuth = async (req, reply) => {
     }
 };
 
+const checkPermission = async (req, reply) => {
+    let token;
+    try {
+        token = await req.jwtVerify();
+    } catch (err) {
+        return reply.send(err);
+    }
+
+    if (token['role'] !== 'admin') {
+        return reply.code(403).send({ message: 'Permission denied' });
+    }
+};
+
 module.exports = {
     login,
     registration,
-    checkAuth
+    checkAuth,
+    checkPermission
 };

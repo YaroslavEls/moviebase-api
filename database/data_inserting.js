@@ -2,9 +2,7 @@ const MovieInterface = require('./interfaces/movie.interface.js');
 const GenreInterface = require('./interfaces/genre.interface.js');
 const UserInterface = require('./interfaces/user.interface.js');
 const ThreadInterface = require('./interfaces/thread.interface.js');
-const CommentInterface = require('./interfaces/comment.interface.js');
 const CompilationInterface = require('./interfaces/comp.interface.js');
-const RatingInterface = require('./interfaces/rating.interface.js');
 const crypto = require('node:crypto');
 
 const data_inserting = async () => {
@@ -85,29 +83,29 @@ const data_inserting = async () => {
         is_review: false
     });
 
-    await CommentInterface.create({
+    await ThreadInterface.postComment({
         text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis',
         thread_id: 1,
         user_id: 2
     });
-    await CommentInterface.create({
+    await ThreadInterface.postComment({
         text: 'et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni',
         thread_id: 1,
         user_id: 3
     });
-    await CommentInterface.create({
+    await ThreadInterface.postComment({
         text: 'dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam',
         thread_id: 2,
         user_id: 2,
         reply_to: 1
     });
-    await CommentInterface.create({
+    await ThreadInterface.postComment({
         text: 'eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis',
         thread_id: 3,
         user_id: 2,
         reply_to: 2
     });
-    await CommentInterface.create({
+    await ThreadInterface.postComment({
         text: 'suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit',
         thread_id: 3,
         user_id: 1,
@@ -130,7 +128,7 @@ const data_inserting = async () => {
     });
     await CompilationInterface.addMovie(1, 1);
 
-    await RatingInterface.create({movie_id: 1, user_id: 1, score: 5});
+    // await RatingInterface.create({movie_id: 1, user_id: 1, score: 5});
 };
 
 module.exports = data_inserting;

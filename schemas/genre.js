@@ -1,11 +1,16 @@
 const AuthController = require('../controllers/auth.controller.js');
 const GenreController = require('../controllers/genre.controller.js');
+const { Movie } = require('./movie.js');
 
 const Genre = {
     type: 'object',
     properties: {
         id: { type: 'integer' },
-        name: { type: 'string' }
+        name: { type: 'string' },
+        movies: {
+            type: 'array',
+            items: Movie
+        }
     }
 };
 
@@ -25,6 +30,16 @@ module.exports = {
         handler: GenreController.getAllGenres
     },
 
+    getOneGenreSchema: {
+        schema: {
+            tags: ['genres'],
+            response: {
+                200: Genre
+            }
+        },
+        handler: GenreController.getOneGenre
+    },
+
     postGenreSchema: {
         schema: {
             tags: ['genres'],
@@ -39,7 +54,7 @@ module.exports = {
                 201: Genre
             }
         },
-        preHandler: AuthController.checkAuth,
+        preHandler: AuthController.checkPermission,
         handler: GenreController.postGenre
     },
 
@@ -55,7 +70,7 @@ module.exports = {
                 }
             }
         },
-        preHandler: AuthController.checkAuth,
+        preHandler: AuthController.checkPermission,
         handler: GenreController.deleteGenre
     }
 };

@@ -1,6 +1,7 @@
 const AuthController = require('../controllers/auth.controller.js');
 const UserController = require('../controllers/user.controller.js');
 const { Compilation } = require('./comp.js');
+const { Movie } = require('./movie.js');
 
 const Follow = {
     type: 'object',
@@ -34,6 +35,16 @@ const User = {
     }
 };
 
+const Rating = {
+    type: 'object',
+    properties: {
+        movie_id : { type: 'integer' },
+        user_id: { type: 'integer' },
+        score: { type: 'integer' },
+        movie: Movie
+    }
+};
+
 module.exports = {
     User,
 
@@ -64,7 +75,7 @@ module.exports = {
         schema: {
             tags: ['users'],
             response: {
-                200: User
+                201: User
             }
         },
         preHandler: AuthController.checkAuth,
@@ -75,11 +86,24 @@ module.exports = {
         schema: {
             tags: ['users'],
             response: {
-                200: User
+                204: User
             }
         },
         preHandler: AuthController.checkAuth,
         handler: UserController.deleteUserFollow
+    },
+
+    getUserRatingsSchema: {
+        schema: {
+            tags: ['users'],
+            response: {
+                200: {
+                    type: 'array',
+                    items: Rating
+                }
+            }
+        },
+        handler: UserController.getUserRatings
     },
 
     registerUserSchema: {

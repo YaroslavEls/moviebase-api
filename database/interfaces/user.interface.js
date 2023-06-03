@@ -1,5 +1,7 @@
 const User = require('../models/user.model.js');
 const Compilation = require('../models/comp.model.js');
+const Rating = require('../models/rating.model.js');
+const Movie = require('../models/movie.model.js');
 
 module.exports = {
     async create(data) {
@@ -17,10 +19,7 @@ module.exports = {
     },
 
     async getOneById(num) {
-        return await User.findOne({
-            where: {
-                id: num
-            },
+        return await User.findByPk(num, {
             include: [
                 { model: Compilation, as: 'compilations' },
                 { model: User, as: 'followers' },
@@ -40,12 +39,38 @@ module.exports = {
     async postFollow(num1, num2) {
         const user = await User.findByPk(num1);
         await user.addFollowing(num2);
-        return user;
+
+        return await User.findByPk(num1, {
+            include: [
+                { model: Compilation, as: 'compilations' },
+                { model: User, as: 'followers' },
+                { model: User, as: 'followings' }
+            ]
+        });
     },
 
     async deleteFollow(num1, num2) {
         const user = await User.findByPk(num1);
         await user.removeFollowing(num2);
-        return user;
+        
+        return await User.findByPk(num1, {
+            include: [
+                { model: Compilation, as: 'compilations' },
+                { model: User, as: 'followers' },
+                { model: User, as: 'followings' }
+            ]
+        });
+    },
+
+    async getRatings(num) {
+        return await Rating.findAll({
+            where: {
+                user_id: num
+            },
+            include: {
+                model: Movie,
+                as: 'movie'
+            }
+        });
     }
 };
