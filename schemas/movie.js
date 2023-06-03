@@ -130,7 +130,7 @@ module.exports = {
         schema: {
             tags: ['movies'],
             response: {
-                201: Movie
+                204: Movie
             }
         },
         preHandler: AuthController.checkAuth,

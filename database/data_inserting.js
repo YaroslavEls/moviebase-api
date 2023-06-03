@@ -128,7 +128,7 @@ const data_inserting = async () => {
     });
     await CompilationInterface.addMovie(1, 1);
 
-    // await RatingInterface.create({movie_id: 1, user_id: 1, score: 5});
+    await MovieInterface.postRating({movie_id: 1, user_id: 1, score: 5});
 };
 
 module.exports = data_inserting;

@@ -42,7 +42,7 @@ const updateComp = async (req, reply) => {
 
     const body = req.body;
     const data = await CompInterface.update(id, body);
-    reply.code(204).send(data);
+    reply.code(201).send(data);
 };
 
 const addMovieComp = async (req, reply) => {

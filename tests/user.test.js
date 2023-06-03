@@ -1,8 +1,8 @@
 const tap = require('tap');
 const build = require('../index.js');
 
-tap.test('tests1: ', async t => {
-    t.plan(6);
+tap.test(': ', async t => {
+    t.plan(7);
     const app = await build(false);
     t.teardown(async () => await app.close());
 
@@ -38,32 +38,43 @@ tap.test('tests1: ', async t => {
         t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role', 'compilations', 'followers', 'followings']);
     });
 
-    t.test('POST /users/:id test', async t => {
+    t.test('POST /users/follow/:id test', async t => {
         const res = await app.inject({
             method: 'POST',
-            url: '/users/1',
+            url: '/users/follow/1',
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         });
 
-        t.equal(res.statusCode, 200);
+        t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role', 'compilations', 'followers', 'followings']);
     });
 
     t.test('DELETE /users/:id test', async t => {
         const res = await app.inject({
             method: 'DELETE',
-            url: '/users/1',
+            url: '/users/follow/1',
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         });
 
+        t.equal(res.statusCode, 204);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role', 'compilations', 'followers', 'followings']);
+    });
+
+    t.test('GET /users/:id/ratings test', async t => {
+        const res = await app.inject({
+            method: 'GET',
+            url: '/users/1/ratings'
+        });
+        
         t.equal(res.statusCode, 200);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role']);
+        t.same(Object.keys(res.json()[0]), ['movie_id', 'user_id', 'score', 'movie']);
     });
 
     t.test('/registration test', async t => {

@@ -27,6 +27,7 @@ tap.test('tests1: ', async t => {
         t.same(Object.keys(res.json()[0]), ['id', 'title', 'desc', 'user_id', 'movies']);
     });
 
+    // fix this
     t.test('POST /compilations test', async t => {
         const res = await app.inject({
             method: 'POST',
@@ -41,6 +42,7 @@ tap.test('tests1: ', async t => {
 
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        // t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
         t.same(Object.keys(res.json()), ['id', 'title', 'user_id']);
     });
 
@@ -67,9 +69,9 @@ tap.test('tests1: ', async t => {
             }
         });
 
-        t.equal(res.statusCode, 204);
+        t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['message']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
     });
 
     t.test('POST /compilations/:comp_id/:movie_id test', async t => {
@@ -81,9 +83,9 @@ tap.test('tests1: ', async t => {
             }
         });
 
-        t.equal(res.statusCode, 200);
+        t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
     });
 
     t.test('DELETE /compilations/:comp_id/:movie_id test', async t => {
@@ -95,9 +97,9 @@ tap.test('tests1: ', async t => {
             }
         });
 
-        t.equal(res.statusCode, 200);
+        t.equal(res.statusCode, 204);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
     });
 
     t.test('DELETE /compilations/:id test', async t => {

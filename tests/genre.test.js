@@ -1,8 +1,8 @@
 const tap = require('tap');
 const build = require('../index.js');
 
-tap.test('tests2: ', async t => {
-    t.plan(3);
+tap.test(': ', async t => {
+    t.plan(4);
     const app = await build(false);
     t.teardown(async () => await app.close());
 
@@ -42,6 +42,17 @@ tap.test('tests2: ', async t => {
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
         t.same(Object.keys(res.json()), ['name']);
+    });
+
+    t.test('GET /genres/:id test', async t => {
+        const res = await app.inject({
+            method: 'GET',
+            url: '/genres/1'
+        });
+
+        t.equal(res.statusCode, 200);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['id', 'name', 'movies']);
     });
 
     t.test('DELETE /genres/:id test', async t => {
