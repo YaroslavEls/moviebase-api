@@ -42,22 +42,24 @@ const data_inserting = async () => {
     });
 
     const salt = crypto.randomBytes(16).toString('base64');
-    const hash = salt + ':' + crypto.scryptSync('zxc000', salt, 64).toString('base64');
+    const hash1 = salt + ':' + crypto.scryptSync('123abc', salt, 64).toString('base64');
+    const hash2 = salt + ':' + crypto.scryptSync('987xyz', salt, 64).toString('base64');
+    const hash3 = salt + ':' + crypto.scryptSync('zxc000', salt, 64).toString('base64');
 
     await UserInterface.create({
         email: 'qweqwe@gmail.com',
         name: 'John',
-        password: '123abc'
+        password: hash1
     });
     await UserInterface.create({
         email: 'asdasd@gmail.com',
         name: 'Claudette',
-        password: '987xyz'
+        password: hash2
     });
     await UserInterface.create({
         email: 'zxczxc@gmail.com',
         name: 'Marcus',
-        password: hash,
+        password: hash3,
         role: 'admin'
     });
 
@@ -126,7 +128,7 @@ const data_inserting = async () => {
         desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor im veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         user_id: 2,
     });
-    await CompilationInterface.addMovie(1, 1);
+    await CompilationInterface.addMovie(2, 1);
 
     await MovieInterface.postRating({movie_id: 1, user_id: 1, score: 5});
 };

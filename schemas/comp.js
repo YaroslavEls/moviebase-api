@@ -46,6 +46,7 @@ module.exports = {
         schema: {
             tags: ['compilations'],
             body: {
+                type: 'object',
                 required: ['title'],
                 properties: {
                     title: { type: 'string' },

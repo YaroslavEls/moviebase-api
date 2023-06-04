@@ -1,10 +1,10 @@
 const tap = require('tap');
 const build = require('../index.js');
 
-tap.test('Threads related tests', async t => {
+tap.test('Compilations related tests', async t => {
     let app, token;
 
-    t.plan(15);
+    t.plan(17);
 
     t.before(async () => {
         app = await build(false);
@@ -24,151 +24,141 @@ tap.test('Threads related tests', async t => {
         await app.close();
     });
 
-    t.test('POST /threads/movie/name test', async t => {
+    t.test('GET /compilations test', async t => {
+        const res = await app.inject({
+            method: 'GET',
+            url: '/compilations'
+        });
+
+        t.equal(res.statusCode, 200);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()[0]), ['id', 'title', 'desc', 'user_id', 'movies']);
+    });
+
+    t.test('POST /compilations test', async t => {
         const res = await app.inject({
             method: 'POST',
-            url: '/threads/movie/Fargo',
+            url: '/compilations',
             headers: {
                 'Authorization': 'Bearer ' + token
             },
             payload: {
-                title: 'wqe',
-                text: 'jhsajdk kashdj',
-                is_review: false
+                title: 'qwe',
+                desc: 'ieryiure'
             }
         });
-        
+
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'title', 'text', 'movie_name', 'user_id', 'is_review']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id']);
     });
 
-    t.test('POST /threads/movie/name test error 400', async t => {
+    t.test('POST /compilations test error 400', async t => {
         const res = await app.inject({
             method: 'POST',
-            url: '/threads/movie/Fargo',
+            url: '/compilations',
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         });
-        
+
         t.equal(res.statusCode, 400);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
         t.same(Object.keys(res.json()), ['statusCode', 'error', 'message']);
     });
 
-    t.test('POST /threads/movie/name test error 401', async t => {
+    t.test('POST /compilations test error 401', async t => {
         const res = await app.inject({
             method: 'POST',
-            url: '/threads/movie/Fargo',
+            url: '/compilations',
             payload: {
-                title: 'wqe',
-                text: 'jhsajdk kashdj',
-                is_review: false
+                title: 'qwe',
+                desc: 'ieryiure'
             }
         });
-        
+
         t.equal(res.statusCode, 401);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
         t.same(Object.keys(res.json()), ['statusCode', 'code', 'error', 'message']);
     });
 
-    t.test('GET /threads test', async t => {
+    t.test('GET /compilations/:id test', async t => {
         const res = await app.inject({
             method: 'GET',
-            url: '/threads'
+            url: '/compilations/1'
         });
-
+        
         t.equal(res.statusCode, 200);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()[0]), ['id', 'title', 'text', 'movie_name', 'user_id', 'is_review', 'comments']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
     });
 
-    t.test('GET /threads/:id test', async t => {
+    t.test('PUT /compilations/:id test', async t => {
         const res = await app.inject({
-            method: 'GET',
-            url: '/threads/1'
-        });
-
-        t.equal(res.statusCode, 200);
-        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'title', 'text', 'movie_name', 'user_id', 'is_review', 'comments']);
-    });
-
-    t.test('GET /threads/movie/:name test', async t => {
-        const res = await app.inject({
-            method: 'GET',
-            url: '/threads/movie/Fargo'
-        });
-
-        t.equal(res.statusCode, 200);
-        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()[0]), ['id', 'title', 'text', 'movie_name', 'user_id', 'is_review', 'comments']);
-    });
-
-    t.test('POST /threads/:id/comment test', async t => {
-        const res = await app.inject({
-            method: 'POST',
-            url: '/threads/1/comment',
+            method: 'PUT',
+            url: '/compilations/4',
             headers: {
                 'Authorization': 'Bearer ' + token
             },
             payload: {
-                text: 'jhsajdk kashdj'
+                desc: 'This one was updated'
             }
         });
-        
+
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'title', 'text', 'movie_name', 'user_id', 'is_review', 'comments']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
     });
 
-    t.test('POST /threads/:id/comment test error 400', async t => {
+    t.test('PUT /compilations/:id test error 401', async t => {
         const res = await app.inject({
-            method: 'POST',
-            url: '/threads/1/comment',
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        });
-        
-        t.equal(res.statusCode, 400);
-        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['statusCode', 'error', 'message']);
-    });
-
-    t.test('POST /threads/:id/comment test error 401', async t => {
-        const res = await app.inject({
-            method: 'POST',
-            url: '/threads/1/comment',
+            method: 'PUT',
+            url: '/compilations/4',
             payload: {
-                text: 'jhsajdk kashdj'
+                desc: 'This one was updated'
             }
         });
-        
+
         t.equal(res.statusCode, 401);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
         t.same(Object.keys(res.json()), ['statusCode', 'code', 'error', 'message']);
     });
 
-    t.test('DELETE /threads/:id/comments test', async t => {
+    t.test('PUT /compilations/:id test error 403', async t => {
         const res = await app.inject({
-            method: 'DELETE',
-            url: '/threads/6/comment',
+            method: 'PUT',
+            url: '/compilations/2',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            payload: {
+                desc: 'This one was updated'
+            }
+        });
+
+        t.equal(res.statusCode, 403);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['message']);
+    });
+
+    t.test('POST /compilations/:comp_id/:movie_id test', async t => {
+        const res = await app.inject({
+            method: 'POST',
+            url: '/compilations/4/1',
             headers: {
                 'Authorization': 'Bearer ' + token
             }
         });
 
-        t.equal(res.statusCode, 204);
+        t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'title', 'text', 'movie_name', 'user_id', 'is_review', 'comments']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
     });
 
-    t.test('DELETE /threads/comments/:id test error 401', async t => {
+    t.test('POST /compilations/:comp_id/:movie_id test error 401', async t => {
         const res = await app.inject({
-            method: 'DELETE',
-            url: '/threads/1/comment'
+            method: 'POST',
+            url: '/compilations/4/1'
         });
 
         t.equal(res.statusCode, 401);
@@ -176,10 +166,10 @@ tap.test('Threads related tests', async t => {
         t.same(Object.keys(res.json()), ['statusCode', 'code', 'error', 'message']);
     });
 
-    t.test('DELETE /threads/comments/:id test error 403', async t => {
+    t.test('POST /compilations/:comp_id/:movie_id test error 403', async t => {
         const res = await app.inject({
-            method: 'DELETE',
-            url: '/threads/1/comment',
+            method: 'POST',
+            url: '/compilations/2/1',
             headers: {
                 'Authorization': 'Bearer ' + token
             }
@@ -190,10 +180,49 @@ tap.test('Threads related tests', async t => {
         t.same(Object.keys(res.json()), ['message']);
     });
 
-    t.test('DELETE /threads/:id test', async t => {
+    t.test('DELETE /compilations/:comp_id/:movie_id test', async t => {
         const res = await app.inject({
             method: 'DELETE',
-            url: '/threads/4',
+            url: '/compilations/4/1',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        t.equal(res.statusCode, 204);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
+    });
+
+    t.test('DELETE /compilations/:comp_id/:movie_id test error 401', async t => {
+        const res = await app.inject({
+            method: 'DELETE',
+            url: '/compilations/2/1'
+        });
+
+        t.equal(res.statusCode, 401);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['statusCode', 'code', 'error', 'message']);
+    });
+
+    t.test('DELETE /compilations/:comp_id/:movie_id test error 403', async t => {
+        const res = await app.inject({
+            method: 'DELETE',
+            url: '/compilations/2/1',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        t.equal(res.statusCode, 403);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['message']);
+    });
+
+    t.test('DELETE /compilations/:id test', async t => {
+        const res = await app.inject({
+            method: 'DELETE',
+            url: '/compilations/4',
             headers: {
                 'Authorization': 'Bearer ' + token
             }
@@ -204,10 +233,10 @@ tap.test('Threads related tests', async t => {
         t.same(Object.keys(res.json()), ['message']);
     });
 
-    t.test('DELETE /threads/:id test error 401', async t => {
+    t.test('DELETE /compilations/:id test error 401', async t => {
         const res = await app.inject({
             method: 'DELETE',
-            url: '/threads/2'
+            url: '/compilations/2'
         });
 
         t.equal(res.statusCode, 401);
@@ -215,10 +244,10 @@ tap.test('Threads related tests', async t => {
         t.same(Object.keys(res.json()), ['statusCode', 'code', 'error', 'message']);
     });
 
-    t.test('DELETE /threads/:id test error 403', async t => {
+    t.test('DELETE /compilations/:id test error 403', async t => {
         const res = await app.inject({
             method: 'DELETE',
-            url: '/threads/2',
+            url: '/compilations/2',
             headers: {
                 'Authorization': 'Bearer ' + token
             }

@@ -65,13 +65,13 @@ module.exports = {
     },
 
     async deleteComment(num) {
-        await Comment.destroy({
-            where: {
-                id: num
-            }
-        });
+        const comment = await Comment.findByPk(num);
 
-        return Thread.findByPk(num, {
+        const thread_id = comment['thread_id'];
+
+        await comment.destroy();
+
+        return Thread.findByPk(thread_id, {
             include: {
                 model: Comment,
                 as: 'comments'
