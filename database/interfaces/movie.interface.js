@@ -1,3 +1,4 @@
+const seq = require('../connection.js');
 const Movie = require('../models/movie.model.js');
 const Genre = require('../models/genre.model.js');
 const Rating = require('../models/rating.model.js');
@@ -39,15 +40,30 @@ module.exports = {
     },
 
     async getOneByName(str) {
-        return await Movie.findOne({
+        const movie = await Movie.findOne({
             where: {
-                name: str
+                name: 'Fargo',
             },
             include: {
-                model: Genre, 
+                model: Genre,
                 as: 'genres'
             }
         });
+
+        const ratings = await Rating.findAll({
+            where: {
+                movie_id: movie.id
+            },
+            attributes: [
+                [seq.fn('avg', seq.col('score')), 'avg_score'],
+                [seq.fn('count', seq.col('score')), 'ratings_count'],
+            ]
+        });
+
+        movie.dataValues.avg_score = ratings[0].dataValues.avg_score;
+        movie.dataValues.ratings_count = ratings[0].dataValues.ratings_count;
+        
+        return movie;
     },
 
     async delete(num) {

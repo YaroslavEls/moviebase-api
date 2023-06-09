@@ -16,6 +16,8 @@ const Movie = {
         name: { type: 'string' },
         description: { type: 'string' },
         year: { type: 'integer' },
+        avg_score: { type: 'number' },
+        ratings_count: {type: 'integer' },
         genres: {
             type: 'array',
             items: Genre

@@ -131,6 +131,13 @@ const data_inserting = async () => {
     await CompilationInterface.addMovie(2, 1);
 
     await MovieInterface.postRating({movie_id: 1, user_id: 1, score: 5});
+    await MovieInterface.postRating({movie_id: 2, user_id: 1, score: 7});
+    await MovieInterface.postRating({movie_id: 3, user_id: 1, score: 6});
+    await MovieInterface.postRating({movie_id: 1, user_id: 2, score: 9});
+    await MovieInterface.postRating({movie_id: 2, user_id: 2, score: 4});
+    await MovieInterface.postRating({movie_id: 3, user_id: 2, score: 2});
+    await MovieInterface.postRating({movie_id: 1, user_id: 3, score: 9});
+    await MovieInterface.postRating({movie_id: 2, user_id: 3, score: 8});
 };
 
 module.exports = data_inserting;
