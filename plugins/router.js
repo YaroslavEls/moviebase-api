@@ -15,6 +15,7 @@ function Routes(app, options, done) {
     app.put('/movies/:id', movieSchemas.updateMovieSchema);
     app.post('/movies/:id/rate', movieSchemas.postMovieRatingSchema);
     app.delete('/movies/:id/rate', movieSchemas.deleteMovieRatingSchema);
+    app.get('/movies/popular', movieSchemas.getMoviesPopularSchema);
     
     app.get('/genres', genreSchemas.getAllGenresSchema);
     app.post('/genres', genreSchemas.postGenreSchema);

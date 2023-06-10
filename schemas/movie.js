@@ -53,6 +53,19 @@ module.exports = {
         handler: MovieController.getOneMovie
     },
 
+    getMoviesPopularSchema: {
+        schema: {
+            tags: ['movies'],
+            response: {
+                200: {
+                    type: 'array',
+                    items: Movie
+                }
+            }
+        },
+        handler: MovieController.getMoviesPopular
+    },
+
     postMovieSchema: {
         schema: {
             tags: ['movies'],

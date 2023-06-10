@@ -1,4 +1,5 @@
 const seq = require('../connection.js');
+const { Op } = require("sequelize");
 const Movie = require('../models/movie.model.js');
 const Genre = require('../models/genre.model.js');
 const Rating = require('../models/rating.model.js');
@@ -119,6 +120,40 @@ module.exports = {
         }
         
         return movie;
+    },
+
+    async getPopular() {
+        const time = new Date();
+        time.setHours(time.getHours() - 24);
+
+        const ratings = await Rating.findAll({
+            where: {
+                createdAt: {
+                    [Op.gte]: time
+                }
+            },
+            attributes: [
+                'movie_id',
+                [seq.fn('count', seq.col('movie_id')), 'count']
+            ],
+            group: ['movie_id'],
+            order: [['count', 'DESC']],
+            limit: 100
+        });
+
+        const ids = ratings.map(item => item['movie_id']);
+
+        return await Movie.findAll({
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            },
+            include: {
+                model: Genre,
+                as: 'genres'
+            }
+        });
     },
 
     async delete(num) {

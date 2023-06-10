@@ -1,4 +1,5 @@
 const MovieInterface = require('../database/interfaces/movie.interface.js');
+const cache = require('../utils/cache.js');
 
 const getAllMovies = async (req, reply) => {
     const data = await MovieInterface.getAll();
@@ -9,6 +10,16 @@ const getOneMovie = async (req, reply) => {
     const name = req.params['name'];
     const user_id = req.user ? req.user['user_id'] : false;
     const data = await MovieInterface.getOneByName(name, user_id);
+    reply.code(200).send(data);
+};
+
+const getMoviesPopular = async (req, reply) => {
+    const key = req.url;
+    let data = cache.get(key);
+    if (!data) {
+        data = await MovieInterface.getPopular();
+        cache.set(key, data, 86400);
+    }
     reply.code(200).send(data);
 };
 
@@ -47,11 +58,12 @@ const deleteMovieRating = async (req, reply) => {
     const movie_id = parseInt(req.params['id']);
     const data = await MovieInterface.deleteRating(user_id, movie_id);
     reply.code(204).send(data);
-}
+};
 
 module.exports = {
     getAllMovies,
     getOneMovie,
+    getMoviesPopular,
     postMovie,
     deleteMovie,
     updateMovie,

@@ -4,7 +4,7 @@ const build = require('../index.js');
 tap.test('Movies related tests', async t => {
     let app, token;
 
-    t.plan(16);
+    t.plan(17);
 
     t.before(async () => {
         app = await build(false);
@@ -253,5 +253,16 @@ tap.test('Movies related tests', async t => {
         t.equal(res.statusCode, 401);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
         t.same(Object.keys(res.json()), ['statusCode', 'code', 'error', 'message']);
+    });
+
+    t.test('GET /movies/popular test', async t => {
+        const res = await app.inject({
+            method: 'GET',
+            url: '/movies/popular'
+        });
+
+        t.equal(res.statusCode, 200);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()[0]), ['id', 'name', 'description', 'year', 'genres']);
     });
 });
