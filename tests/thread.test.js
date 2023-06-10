@@ -40,7 +40,7 @@ tap.test('Threads related tests', async t => {
         
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'title', 'text', 'movie_name', 'user_id', 'is_review']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'text', 'movie_name', 'user_id', 'is_review', 'comments']);
     });
 
     t.test('POST /threads/movie/name test error 400', async t => {

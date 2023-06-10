@@ -9,7 +9,8 @@ const Genre = {
         name: { type: 'string' },
         movies: {
             type: 'array',
-            items: Movie
+            items: Movie,
+            default: []
         }
     }
 };

@@ -1,18 +1,18 @@
 const seq = require('../connection.js');
-const { Op } = require("sequelize");
+const { Op } = require('sequelize');
 const Movie = require('../models/movie.model.js');
 const Genre = require('../models/genre.model.js');
 const Rating = require('../models/rating.model.js');
 
-const _getOne = async (m_id, u_id) => {
-    const movie = await Movie.findOne({
-        where: {
-            id: m_id,
-        },
+const _getOne = async (m_id, u_id, name=false) => {
+    const query = {
+        where: name ? { name: name } : { id: m_id },
         include: [
             { model: Genre, as: 'genres' },
         ],
-    });
+    };
+
+    const movie = await Movie.findOne(query);
 
     if (u_id) {
         const rating = await Rating.findOne({
@@ -41,7 +41,7 @@ const _getOne = async (m_id, u_id) => {
         movie.dataValues.avg_score = ratings[0].dataValues.avg_score;
         movie.dataValues.ratings_count = ratings[0].dataValues.ratings_count;
     }
-    
+
     return movie;
 };
 
@@ -65,61 +65,22 @@ module.exports = {
             where: {
                 name: data['name']
             },
-            include: {
-                model: Genre,
-                as: 'genres'
-            }
+            include: [
+                { model: Genre, as: 'genres' }
+            ]
         });
     },
 
     async getAll() {
         return await Movie.findAll({
-            include: {
-                model: Genre, 
-                as: 'genres'
-            }
+            include: [
+                { model: Genre, as: 'genres' }
+            ]
         });
     },
 
     async getOneByName(str, user_id) {
-        const movie = await Movie.findOne({
-            where: {
-                name: str,
-            },
-            include: [
-                { model: Genre, as: 'genres' },
-            ],
-        });
-
-        if (user_id) {
-            const rating = await Rating.findOne({
-                where: {
-                    user_id: user_id,
-                    movie_id: movie.id
-                }
-            });
-
-            if (rating) {
-                movie.dataValues.your_rating = rating['score'];
-            }
-        }
-
-        const ratings = await Rating.findAll({
-            where: {
-                movie_id: movie.id
-            },
-            attributes: [
-                [seq.fn('avg', seq.col('score')), 'avg_score'],
-                [seq.fn('count', seq.col('score')), 'ratings_count'],
-            ]
-        });
-
-        if (ratings[0]) {
-            movie.dataValues.avg_score = ratings[0].dataValues.avg_score;
-            movie.dataValues.ratings_count = ratings[0].dataValues.ratings_count;
-        }
-        
-        return movie;
+        return await _getOne(0, user_id, str);
     },
 
     async getPopular() {

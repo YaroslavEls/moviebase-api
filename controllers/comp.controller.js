@@ -24,7 +24,7 @@ const deleteComp = async (req, reply) => {
     const id = parseInt(req.params['id']);
     const owner = await CompInterface.getOwner(id);
 
-    if (owner.user_id != req.user['user_id']) {
+    if (owner.user_id !== req.user['user_id']) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -36,7 +36,7 @@ const updateComp = async (req, reply) => {
     const id = parseInt(req.params['id']);
     const owner = await CompInterface.getOwner(id);
 
-    if (owner.user_id != req.user['user_id']) {
+    if (owner.user_id !== req.user['user_id']) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -49,7 +49,7 @@ const addMovieComp = async (req, reply) => {
     const id = parseInt(req.params['comp_id']);
     const owner = await CompInterface.getOwner(id);
 
-    if (owner.user_id != req.user['user_id']) {
+    if (owner.user_id !== req.user['user_id']) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 
@@ -63,7 +63,7 @@ const removeMovieComp = async (req, reply) => {
     const id = parseInt(req.params['comp_id']);
     const owner = await CompInterface.getOwner(id);
 
-    if (owner.user_id != req.user['user_id']) {
+    if (owner.user_id !== req.user['user_id']) {
         return reply.code(403).send({ message: 'Permission denied' });
     }
 

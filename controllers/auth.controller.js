@@ -11,8 +11,9 @@ const login = async (req, reply) => {
     }
 
     const buffer = Buffer.from(user.password, 'utf8');
-    const salt = user.password.split(":")[0];
-    const hash = salt + ':' + crypto.scryptSync(password, salt, 64).toString('base64');
+    const salt = user.password.split(':')[0];
+    let hash = crypto.scryptSync(password, salt, 64).toString('base64');
+    hash = salt + ':' + hash;
 
     if (!crypto.timingSafeEqual(buffer, Buffer.from(hash, 'utf8'))) {
         reply.code(400).send({ message: 'Invalid password' });
@@ -29,9 +30,10 @@ const login = async (req, reply) => {
 
 const registration = async (req, reply) => {
     const { email, name, password } = req.body;
-    
+
     const salt = crypto.randomBytes(16).toString('base64');
-    const hash = salt + ':' + crypto.scryptSync(password, salt, 64).toString('base64');
+    let hash = crypto.scryptSync(password, salt, 64).toString('base64');
+    hash = salt + ':' + hash;
 
     const params = { email, name, 'password': hash };
     const data = await UserInterface.create(params);

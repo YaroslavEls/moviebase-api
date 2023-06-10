@@ -32,7 +32,7 @@ tap.test('Genres related tests', async t => {
 
         t.equal(res.statusCode, 200);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()[0]), ['id', 'name']);
+        t.same(Object.keys(res.json()[0]), ['id', 'name', 'movies']);
     });
 
     t.test('POST /genres test', async t => {
@@ -49,7 +49,7 @@ tap.test('Genres related tests', async t => {
 
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['name']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'movies']);
     });
 
     t.test('POST /genres test error 400', async t => {

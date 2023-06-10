@@ -39,27 +39,13 @@ module.exports = {
     async postFollow(num1, num2) {
         const user = await User.findByPk(num1);
         await user.addFollowing(num2);
-
-        return await User.findByPk(num1, {
-            include: [
-                { model: Compilation, as: 'compilations' },
-                { model: User, as: 'followers' },
-                { model: User, as: 'followings' }
-            ]
-        });
+        return await this.getOneById(num1);
     },
 
     async deleteFollow(num1, num2) {
         const user = await User.findByPk(num1);
         await user.removeFollowing(num2);
-        
-        return await User.findByPk(num1, {
-            include: [
-                { model: Compilation, as: 'compilations' },
-                { model: User, as: 'followers' },
-                { model: User, as: 'followings' }
-            ]
-        });
+        return await this.getOneById(num1);
     },
 
     async getRatings(num) {
@@ -67,10 +53,9 @@ module.exports = {
             where: {
                 user_id: num
             },
-            include: {
-                model: Movie,
-                as: 'movie'
-            }
+            include: [
+                { model: Movie, as: 'movie' }
+            ]
         });
     }
 };

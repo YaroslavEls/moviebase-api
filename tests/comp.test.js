@@ -50,7 +50,7 @@ tap.test('Compilations related tests', async t => {
 
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id']);
+        t.same(Object.keys(res.json()), ['id', 'title', 'desc', 'user_id', 'movies']);
     });
 
     t.test('POST /compilations test error 400', async t => {

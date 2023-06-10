@@ -20,10 +20,11 @@ const Thread = {
         text: { type: 'string' },
         movie_name: { type: 'string' },
         user_id: { type: 'integer' },
-        is_review: {type: 'boolean'},
+        is_review: { type: 'boolean' },
         comments: {
             type: 'array',
-            items: Comment
+            items: Comment,
+            default: []
         }
     }
 };

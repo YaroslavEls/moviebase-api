@@ -18,10 +18,11 @@ const Movie = {
         year: { type: 'integer' },
         your_rating: { type: 'integer' },
         avg_score: { type: 'number' },
-        ratings_count: {type: 'integer' },
+        ratings_count: { type: 'integer' },
         genres: {
             type: 'array',
-            items: Genre
+            items: Genre,
+            default: []
         }
     }
 };
@@ -128,7 +129,7 @@ module.exports = {
                 type: 'object',
                 required: ['score'],
                 properties: {
-                    score: { 
+                    score: {
                         type: 'integer',
                         minimum: 1,
                         maximum: 10

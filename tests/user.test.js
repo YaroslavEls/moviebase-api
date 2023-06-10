@@ -120,7 +120,7 @@ tap.test('Users related tests', async t => {
 
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role', 'compilations', 'followers', 'followings']);
     });
 
     t.test('/registration test error 400', async t => {
@@ -146,7 +146,7 @@ tap.test('Users related tests', async t => {
 
         t.equal(res.statusCode, 200);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role', 'token']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'email', 'password', 'role', 'compilations', 'followers', 'followings', 'token']);
     });
 
     t.test('/login test error invalid username', async t => {

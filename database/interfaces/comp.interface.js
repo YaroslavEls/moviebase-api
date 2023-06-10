@@ -8,19 +8,17 @@ module.exports = {
 
     async getAll() {
         return await Compilation.findAll({
-            include: {
-                model: Movie,
-                as: 'movies'
-            }
+            include: [
+                { model: Movie, as: 'movies' }
+            ]
         });
     },
 
     async getOneById(num) {
         return await Compilation.findByPk(num, {
-            include: {
-                model: Movie,
-                as: 'movies'
-            }
+            include: [
+                { model: Movie, as: 'movies' }
+            ]
         });
     },
 
@@ -44,41 +42,26 @@ module.exports = {
     },
 
     async update(num, data) {
-        await Compilation.update(data, {
+        const comp = await this.getOneById(num);
+
+        await comp.update(data, {
             where: {
                 id: num
             }
         });
 
-        return await Compilation.findByPk(num, {
-            include: {
-                model: Movie,
-                as: 'movies'
-            }
-        });
+        return comp;
     },
 
     async addMovie(num1, num2) {
-        const comp = await Compilation.findByPk(num1);
+        const comp = await this.getOneById(num1);
         await comp.addMovie(num2);
-        
-        return await Compilation.findByPk(num1, {
-            include: {
-                model: Movie,
-                as: 'movies'
-            }
-        });
+        return comp;
     },
 
     async removeMovie(num1, num2) {
-        const comp = await Compilation.findByPk(num1);
+        const comp = await this.getOneById(num1);
         await comp.removeMovie(num2);
-        
-        return await Compilation.findByPk(num1, {
-            include: {
-                model: Movie,
-                as: 'movies'
-            }
-        });
+        return comp;
     }
 };

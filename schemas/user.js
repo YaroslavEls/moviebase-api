@@ -22,15 +22,18 @@ const User = {
         role: { type: 'string' },
         compilations: {
             type: 'array',
-            items: Compilation
+            items: Compilation,
+            default: []
         },
         followers: {
             type: 'array',
-            items: Follow
+            items: Follow,
+            default: []
         },
         followings: {
             type: 'array',
-            items: Follow
+            items: Follow,
+            default: []
         }
     }
 };
@@ -38,7 +41,7 @@ const User = {
 const Rating = {
     type: 'object',
     properties: {
-        movie_id : { type: 'integer' },
+        movie_id: { type: 'integer' },
         user_id: { type: 'integer' },
         score: { type: 'integer' },
         movie: Movie

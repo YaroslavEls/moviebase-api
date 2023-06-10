@@ -13,8 +13,8 @@ const getOneGenre = async (req, reply) => {
 
 const postGenre = async (req, reply) => {
     const body = req.body;
-    await GenreInterface.create(body);
-    reply.code(201).send(body);
+    const data = await GenreInterface.create(body);
+    reply.code(201).send(data);
 };
 
 const deleteGenre = async (req, reply) => {

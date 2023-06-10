@@ -11,14 +11,10 @@ module.exports = {
     },
 
     async getOneById(num) {
-        return await Genre.findOne({
-            where: {
-                id: num
-            },
-            include: {
-                model: Movie,
-                as: 'movies'
-            }
+        return await Genre.findByPk(num, {
+            include: [
+                { model: Movie, as: 'movies' }
+            ]
         });
     },
 

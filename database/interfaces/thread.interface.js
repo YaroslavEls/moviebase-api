@@ -8,22 +8,17 @@ module.exports = {
 
     async getAll() {
         return await Thread.findAll({
-            include: {
-                model: Comment, 
-                as: 'comments'
-            }
+            include: [
+                { model: Comment, as: 'comments' }
+            ]
         });
     },
 
     async getOneById(num) {
-        return await Thread.findOne({
-            where: {
-                id: num
-            },
-            include: {
-                model: Comment, 
-                as: 'comments'
-            }
+        return await Thread.findByPk(num, {
+            include: [
+                { model: Comment, as: 'comments' }
+            ]
         });
     },
 
@@ -32,10 +27,9 @@ module.exports = {
             where: {
                 movie_name: str
             },
-            include: {
-                model: Comment, 
-                as: 'comments'
-            }
+            include: [
+                { model: Comment, as: 'comments' }
+            ]
         });
     },
 
@@ -51,13 +45,7 @@ module.exports = {
 
     async postComment(data) {
         await Comment.create(data);
-
-        return Thread.findByPk(data['thread_id'], {
-            include: {
-                model: Comment,
-                as: 'comments'
-            }
-        });
+        return await this.getOneById(data['thread_id']);
     },
 
     async getCommentById(num) {
@@ -66,16 +54,8 @@ module.exports = {
 
     async deleteComment(num) {
         const comment = await Comment.findByPk(num);
-
         const thread_id = comment['thread_id'];
-
         await comment.destroy();
-
-        return Thread.findByPk(thread_id, {
-            include: {
-                model: Comment,
-                as: 'comments'
-            }
-        });
+        return await this.getOneById(thread_id);
     }
 };

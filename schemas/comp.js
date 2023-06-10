@@ -1,17 +1,18 @@
 const AuthController = require('../controllers/auth.controller.js');
 const CompController = require('../controllers/comp.controller.js');
-const { Movie } = require('./movie.js')
+const { Movie } = require('./movie.js');
 
 const Compilation = {
     type: 'object',
     properties: {
         id: { type: 'integer' },
         title: { type: 'string' },
-        desc: { type: 'string' },
+        desc: { type: 'string', default: '' },
         user_id: { type: 'integer' },
         movies: {
             type: 'array',
-            items: Movie
+            items: Movie,
+            default: []
         }
     }
 };

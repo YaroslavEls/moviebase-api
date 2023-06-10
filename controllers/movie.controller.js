@@ -47,7 +47,7 @@ const postMovieRating = async (req, reply) => {
     const user_id = req.user['user_id'];
     const movie_id = parseInt(req.params['id']);
     const { score } = req.body;
-    
+
     const params = { user_id, movie_id, score };
     const data = await MovieInterface.postRating(params);
     reply.code(201).send(data);
