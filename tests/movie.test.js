@@ -4,7 +4,7 @@ const build = require('../index.js');
 tap.test('Movies related tests', async t => {
     let app, token;
 
-    t.plan(15);
+    t.plan(16);
 
     t.before(async () => {
         app = await build(false);
@@ -84,7 +84,7 @@ tap.test('Movies related tests', async t => {
         t.same(Object.keys(res.json()), ['statusCode', 'code', 'error', 'message']);
     });
 
-    t.test('GET /movies/:name test', async t => {
+    t.test('GET /movies/:name test (no auth)', async t => {
         const res = await app.inject({
             method: 'GET',
             url: '/movies/Fargo'
@@ -92,7 +92,21 @@ tap.test('Movies related tests', async t => {
         
         t.equal(res.statusCode, 200);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'genres']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'avg_score', 'ratings_count', 'genres']);
+    });
+
+    t.test('GET /movies/:name test (with auth)', async t => {
+        const res = await app.inject({
+            method: 'GET',
+            url: '/movies/Fargo',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        
+        t.equal(res.statusCode, 200);
+        t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
+        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'your_rating', 'avg_score', 'ratings_count', 'genres']);
     });
 
     t.test('DELETE /movies/:id test', async t => {
@@ -134,7 +148,7 @@ tap.test('Movies related tests', async t => {
 
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'genres']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'your_rating', 'avg_score', 'ratings_count', 'genres']);
     });
 
     t.test('PUT /movies/:id test error 401', async t => {
@@ -165,7 +179,7 @@ tap.test('Movies related tests', async t => {
 
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'genres']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'your_rating', 'avg_score', 'ratings_count', 'genres']);
     });
 
     t.test('POST /movies/:id/rate test update', async t => {
@@ -182,7 +196,7 @@ tap.test('Movies related tests', async t => {
 
         t.equal(res.statusCode, 201);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'genres']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'your_rating', 'avg_score', 'ratings_count', 'genres']);
     });
 
     t.test('POST /movies/:id/rate test error 400', async t => {
@@ -227,7 +241,7 @@ tap.test('Movies related tests', async t => {
 
         t.equal(res.statusCode, 204);
         t.equal(res.headers['content-type'], 'application/json; charset=utf-8');
-        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'genres']);
+        t.same(Object.keys(res.json()), ['id', 'name', 'description', 'year', 'avg_score', 'ratings_count', 'genres']);
     });
 
     t.test('DELETE /movies/:id/rate test error 401', async t => {

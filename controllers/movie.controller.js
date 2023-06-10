@@ -7,7 +7,8 @@ const getAllMovies = async (req, reply) => {
 
 const getOneMovie = async (req, reply) => {
     const name = req.params['name'];
-    const data = await MovieInterface.getOneByName(name);
+    const user_id = req.user ? req.user['user_id'] : false;
+    const data = await MovieInterface.getOneByName(name, user_id);
     reply.code(200).send(data);
 };
 
@@ -24,9 +25,10 @@ const deleteMovie = async (req, reply) => {
 };
 
 const updateMovie = async (req, reply) => {
-    const id = parseInt(req.params['id']);
+    const movie_id = parseInt(req.params['id']);
     const body = req.body;
-    const data = await MovieInterface.update(id, body);
+    const user_id = req.user['user_id'];
+    const data = await MovieInterface.update(movie_id, body, user_id);
     reply.code(201).send(data);
 };
 

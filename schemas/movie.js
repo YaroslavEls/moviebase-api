@@ -16,6 +16,7 @@ const Movie = {
         name: { type: 'string' },
         description: { type: 'string' },
         year: { type: 'integer' },
+        your_rating: { type: 'integer' },
         avg_score: { type: 'number' },
         ratings_count: {type: 'integer' },
         genres: {
@@ -48,6 +49,7 @@ module.exports = {
                 200: Movie
             }
         },
+        preHandler: AuthController.optionalAuth,
         handler: MovieController.getOneMovie
     },
 

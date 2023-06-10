@@ -3,6 +3,47 @@ const Movie = require('../models/movie.model.js');
 const Genre = require('../models/genre.model.js');
 const Rating = require('../models/rating.model.js');
 
+const _getOne = async (m_id, u_id) => {
+    const movie = await Movie.findOne({
+        where: {
+            id: m_id,
+        },
+        include: [
+            { model: Genre, as: 'genres' },
+        ],
+    });
+
+    if (u_id) {
+        const rating = await Rating.findOne({
+            where: {
+                user_id: u_id,
+                movie_id: movie.id
+            }
+        });
+
+        if (rating) {
+            movie.dataValues.your_rating = rating['score'];
+        }
+    }
+
+    const ratings = await Rating.findAll({
+        where: {
+            movie_id: movie.id
+        },
+        attributes: [
+            [seq.fn('avg', seq.col('score')), 'avg_score'],
+            [seq.fn('count', seq.col('score')), 'ratings_count'],
+        ]
+    });
+
+    if (ratings[0]) {
+        movie.dataValues.avg_score = ratings[0].dataValues.avg_score;
+        movie.dataValues.ratings_count = ratings[0].dataValues.ratings_count;
+    }
+    
+    return movie;
+};
+
 module.exports = {
     async create(data) {
         const movie = await Movie.create(data);
@@ -39,16 +80,28 @@ module.exports = {
         });
     },
 
-    async getOneByName(str) {
+    async getOneByName(str, user_id) {
         const movie = await Movie.findOne({
             where: {
-                name: 'Fargo',
+                name: str,
             },
-            include: {
-                model: Genre,
-                as: 'genres'
-            }
+            include: [
+                { model: Genre, as: 'genres' },
+            ],
         });
+
+        if (user_id) {
+            const rating = await Rating.findOne({
+                where: {
+                    user_id: user_id,
+                    movie_id: movie.id
+                }
+            });
+
+            if (rating) {
+                movie.dataValues.your_rating = rating['score'];
+            }
+        }
 
         const ratings = await Rating.findAll({
             where: {
@@ -60,8 +113,10 @@ module.exports = {
             ]
         });
 
-        movie.dataValues.avg_score = ratings[0].dataValues.avg_score;
-        movie.dataValues.ratings_count = ratings[0].dataValues.ratings_count;
+        if (ratings[0]) {
+            movie.dataValues.avg_score = ratings[0].dataValues.avg_score;
+            movie.dataValues.ratings_count = ratings[0].dataValues.ratings_count;
+        }
         
         return movie;
     },
@@ -76,19 +131,14 @@ module.exports = {
         return;
     },
 
-    async update(num, data) {
+    async update(num, data, user_id) {
         await Movie.update(data, {
             where: {
                 id: num
             }
         });
 
-        return await Movie.findByPk(num, {
-            include: {
-                model: Genre,
-                as: 'genres'
-            }
-        });
+        return await _getOne(num, user_id);
     },
 
     async postRating(data) {
@@ -105,12 +155,7 @@ module.exports = {
             await rating.update(data);
         }
 
-        return await Movie.findByPk(data['movie_id'], {
-            include: {
-                model: Genre,
-                as: 'genres'
-            }
-        });
+        return await _getOne(data['movie_id'], data['user_id']);
     },
 
     async deleteRating(num1, num2) {
@@ -121,11 +166,6 @@ module.exports = {
             }
         });
 
-        return await Movie.findByPk(num2, {
-            include: {
-                model: Genre,
-                as: 'genres'
-            }
-        });
+        return await _getOne(num2, num1);
     }
 };

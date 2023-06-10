@@ -59,9 +59,18 @@ const checkPermission = async (req, reply) => {
     }
 };
 
+const optionalAuth = async (req, reply) => {
+    try {
+        await req.jwtVerify();
+    } catch (err) {
+        return;
+    }
+};
+
 module.exports = {
     login,
     registration,
     checkAuth,
-    checkPermission
+    checkPermission,
+    optionalAuth
 };
